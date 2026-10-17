@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Productos | H. Trimarchi S.R.L.</title>
+  <meta name="description" content="Repuestos, kits de instalación, cabinas, centrales hidráulicas, máquinas, pistones, puertas, guías y cables de acero para ascensores. Más de 9.000 productos en stock.">
+  <meta property="og:title" content="Productos | H. Trimarchi S.R.L.">
+  <meta property="og:image" content="https://trimarchi.com.ar/wp-content/uploads/2025/09/estanteria1-1024x768.jpg">
+  <link rel="icon" href="https://trimarchi.com.ar/wp-content/uploads/2025/08/cropped-HT-150x150.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/head.js"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="productos" class="bg-ivory-50 font-sans text-ink antialiased overflow-x-hidden">
+  <div id="site-header"></div>
+
+  <main>
+    <!-- Page header -->
+    <section class="paper pb-16 pt-14 sm:pt-20">
+      <div class="mx-auto max-w-4xl px-4 text-center sm:px-6">
+        <p class="reveal rule eyebrow text-xs font-semibold uppercase text-gold-700 sm:text-sm">Productos</p>
+        <h1 class="reveal mt-6 font-serif text-[2.6rem] font-semibold leading-[1.08] text-navy-900 sm:text-6xl lg:text-7xl">Uno de los catálogos <em class="font-medium text-gold-600">más completos</em> del mercado</h1>
+        <p class="reveal mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl">Del repuesto puntual al kit completo para una instalación nueva. Seleccione una línea para ver modelos, características y fichas.</p>
+      </div>
+    </section>
+
+    <!-- Grid -->
+    <section class="border-t border-ivory-200 bg-ivory-100 py-20 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div id="productGrid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+    </section>
+
+    <!-- Assurance -->
+    <section class="border-t border-ivory-200 bg-white py-20 sm:py-24">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-12 md:grid-cols-3 md:gap-0 md:divide-x md:divide-ivory-200">
+          <div class="reveal px-8 text-center">
+            <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-gold-500/40 text-gold-600"><i data-lucide="warehouse" class="h-7 w-7" stroke-width="1.25"></i></span>
+            <h2 class="mt-5 font-serif text-3xl font-semibold text-navy-900">Stock permanente</h2>
+            <p class="mt-2 leading-relaxed text-ink-soft">Más de 9.000 productos, nacionales e importados, listos para entregar.</p>
+          </div>
+          <div class="reveal px-8 text-center">
+            <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-gold-500/40 text-gold-600"><i data-lucide="badge-check" class="h-7 w-7" stroke-width="1.25"></i></span>
+            <h2 class="mt-5 font-serif text-3xl font-semibold text-navy-900">Marcas oficiales</h2>
+            <p class="mt-2 leading-relaxed text-ink-soft">Representantes de los principales fabricantes nacionales e internacionales.</p>
+          </div>
+          <div class="reveal px-8 text-center">
+            <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-gold-500/40 text-gold-600"><i data-lucide="message-square-text" class="h-7 w-7" stroke-width="1.25"></i></span>
+            <h2 class="mt-5 font-serif text-3xl font-semibold text-navy-900">Asesoramiento técnico</h2>
+            <p class="mt-2 leading-relaxed text-ink-soft">Le ayudamos a elegir el componente correcto para cada instalación.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div data-cta></div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/site.js"></script>
+  <script>
+    document.getElementById('productGrid').innerHTML = productCardsHTML();
+  </script>
+  <script src="assets/layout.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Producto | H. Trimarchi S.R.L.</title>
+  <meta name="description" content="Productos para ascensores de H. Trimarchi S.R.L.: características, modelos y cotización.">
+  <link rel="icon" href="https://trimarchi.com.ar/wp-content/uploads/2025/08/cropped-HT-150x150.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/head.js"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="productos" class="bg-ivory-50 font-sans text-ink antialiased overflow-x-hidden">
+  <div id="site-header"></div>
+
+  <main id="detail"></main>
+
+  <div id="site-footer"></div>
+
+  <dialog id="lightbox" class="m-auto w-[min(92vw,64rem)] overflow-hidden rounded-3xl bg-white p-0 shadow-2xl">
+    <img id="lightboxImg" alt="" class="max-h-[80vh] w-full object-contain">
+    <button id="lightboxClose" class="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-navy-900 shadow ring-1 ring-ivory-200" aria-label="Cerrar imagen">
+      <i data-lucide="x" class="h-5 w-5" stroke-width="1.75"></i>
+    </button>
+  </dialog>
+
+  <script src="assets/site.js"></script>
+  <script>
+    const slug = new URLSearchParams(location.search).get('p');
+    const p = PRODUCTS.find(x => x.slug === slug) || PRODUCTS[0];
+
+    const idx = PRODUCTS.indexOf(p);
+    const prev = PRODUCTS[(idx - 1 + PRODUCTS.length) % PRODUCTS.length];
+    const next = PRODUCTS[(idx + 1) % PRODUCTS.length];
+    const brand = p.brand && brandById(p.brand);
+
+    document.title = `${productLabel(p)} | H. Trimarchi S.R.L.`;
+    document.querySelector('meta[name="description"]').content = p.short;
+
+    const check = '<i data-lucide="check" class="mt-1 h-5 w-5 shrink-0 text-gold-600" stroke-width="2"></i>';
+
+    const featuresHTML = `
+      <div class="mx-auto mt-16 max-w-4xl">
+        <div class="text-center"><p class="reveal rule eyebrow text-xs font-semibold uppercase text-gold-700 sm:text-sm">Características</p></div>
+        <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+          ${p.features.map(f => `<li class="reveal flex gap-3 rounded-2xl bg-ivory-50 p-5 text-navy-900 ring-1 ring-ivory-200">${check}<span>${f}</span></li>`).join('')}
+        </ul>
+      </div>`;
+
+    const sectionHead = (eyebrow, title) => `
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="reveal rule eyebrow text-xs font-semibold uppercase text-gold-700 sm:text-sm">${eyebrow}</p>
+        ${title ? `<h2 class="reveal mt-5 font-serif text-4xl font-semibold leading-tight text-navy-900 sm:text-5xl">${title}</h2>` : ''}
+      </div>`;
+
+    // Reserved frame for the 360° product video (the original MP4 URL is kept in data-video)
+    const view360HTML = m => `
+      <div class="view360 mx-3 mt-3 flex aspect-video flex-col items-center justify-center gap-2 rounded-[1.25rem] border border-dashed border-gold-500/50 bg-ivory-50 text-center" data-video="${m.video ? UP + m.video : ''}">
+        <i data-lucide="rotate-3d" class="h-8 w-8 text-gold-600" stroke-width="1.25"></i>
+        <span class="eyebrow text-[0.65rem] font-semibold uppercase text-gold-700">Vista 360°</span>
+        <span class="px-4 text-xs text-ink-muted">Espacio reservado para el video del modelo</span>
+      </div>`;
+
+    let modelsHTML = '';
+    if (p.models) {
+      const withSpecs = p.models.some(m => m.specs);
+      const title = p.modelsTitle || (withSpecs ? 'Una solución para cada instalación' : 'Opciones disponibles');
+      modelsHTML = `
+        <section class="border-t border-ivory-200 bg-ivory-100 py-20 sm:py-24">
+          <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            ${sectionHead(p.modelsEyebrow || 'Modelos y variantes', title)}
+            ${withSpecs
+              ? `<div class="mt-14 flex flex-wrap justify-center gap-6">
+                  ${p.models.map(m => `
+                    <article class="reveal flex w-full flex-col overflow-hidden rounded-[1.75rem] bg-white text-center ring-1 ring-ivory-200 sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
+                      ${p.view360 ? view360HTML(m) : ''}
+                      <div class="flex-1 p-8">
+                        <h3 class="font-serif text-3xl font-semibold text-navy-900 lining-nums">${m.name}</h3>
+                        <span class="mx-auto mt-4 block h-px w-12 bg-gold-500/60"></span>
+                        <ul class="mt-5 space-y-2 text-ink-soft">${m.specs.map(s => `<li>${s}</li>`).join('')}</ul>
+                      </div>
+                    </article>`).join('')}
+                </div>`
+              : `<ul class="reveal mt-12 flex flex-wrap justify-center gap-3">
+                  ${p.models.map(m => `<li class="rounded-full bg-white px-6 py-3 font-medium text-navy-900 ring-1 ring-ivory-200">${m.name}</li>`).join('')}
+                </ul>`}
+          </div>
+        </section>`;
+    }
+
+    const tableHTML = (t, stacked) => {
+      const wide = t.columns.length > 4;
+      let prevGroup = null;
+      const rows = t.rows.map(r => {
+        const group = t.groupBy ? r[0].split(' × ')[0] : null;
+        const groupStart = t.groupBy && prevGroup !== null && group !== prevGroup;
+        prevGroup = group;
+        return `<tr class="${groupStart ? 'border-t-2 border-gold-500/40' : 'border-t border-ivory-200'} bg-white even:bg-ivory-50">
+          ${r.map((c, ci) => `<td class="whitespace-nowrap px-4 py-3 ${ci === 0 ? 'sticky left-0 bg-inherit font-semibold text-navy-900' : 'text-ink-soft'}">${c}</td>`).join('')}
+        </tr>`;
+      }).join('');
+      return `
+        <figure class="reveal flex flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-sm ring-1 ring-ivory-200 ${stacked && !wide ? 'mx-auto w-full max-w-4xl' : ''}">
+          <figcaption class="border-b border-ivory-200 px-6 py-6 text-center">
+            <h3 class="font-serif text-3xl font-semibold text-navy-900 lining-nums">${t.title}</h3>
+            ${t.caption ? `<p class="mx-auto mt-1 max-w-xl text-sm text-ink-muted">${t.caption}</p>` : ''}
+          </figcaption>
+          <div class="flex-1 overflow-x-auto">
+            <table class="w-full ${wide ? 'min-w-[720px]' : ''} text-center text-[0.95rem] lining-nums tabular-nums">
+              <thead class="bg-ivory-100">
+                <tr>${t.columns.map(([label, unit], ci) => `
+                  <th scope="col" class="px-4 py-4 align-bottom text-sm font-semibold leading-snug text-navy-900 ${ci === 0 ? 'sticky left-0 bg-ivory-100' : ''}">
+                    ${label}${unit ? `<span class="mt-1 block text-xs font-medium text-gold-700">${unit}</span>` : ''}
+                  </th>`).join('')}
+                </tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+          ${t.note ? `<p class="border-t border-ivory-200 px-6 py-4 text-center text-sm text-ink-muted">${t.note}</p>` : ''}
+        </figure>`;
+    };
+
+    let tablesHTML = '';
+    if (p.tables) {
+      const compact = p.tables.every(t => t.columns.length <= 3 && t.rows.every(r => r.join('').length < 24));
+      tablesHTML = `
+        <section class="border-t border-ivory-200 bg-white py-20 sm:py-24">
+          <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            ${sectionHead('Información técnica', 'Tablas de especificaciones')}
+            <div class="mt-14 ${compact ? `grid items-start gap-6 lg:grid-cols-${p.tables.length}` : 'space-y-10'}">
+              ${p.tables.map(t => tableHTML(t, !compact)).join('')}
+            </div>
+            ${p.tablesNote ? `<p class="reveal mt-8 text-center text-sm text-ink-muted">${p.tablesNote}</p>` : ''}
+          </div>
+        </section>`;
+    }
+
+    const n = p.gallery.length;
+    const galleryCols = n === 1 ? 'mx-auto max-w-2xl' : n === 3 ? 'sm:grid-cols-3' : n % 4 === 0 ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-2 lg:grid-cols-3';
+    const imgClass = n === 1 ? 'h-auto object-contain p-6' : p.galleryFit === 'cover' ? 'aspect-[3/4] h-full object-cover' : 'aspect-square h-full object-contain p-4';
+    const galleryHTML = `
+      <section class="border-t border-ivory-200 ${p.tables ? 'bg-ivory-100' : 'bg-white'} py-20 sm:py-24">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          ${sectionHead('Galería')}
+          <div class="mt-10 grid gap-5 ${galleryCols}">
+            ${p.gallery.map((g, i) => `
+              <button type="button" data-src="${UP + g}" class="gallery-item reveal group overflow-hidden rounded-[1.5rem] bg-white ring-1 ring-ivory-200 transition hover:ring-gold-500/50" aria-label="Ampliar imagen ${i + 1} de ${p.name}">
+                <img src="${UP + g}" alt="${p.name} — imagen ${i + 1}" loading="lazy" class="${imgClass} w-full transition duration-700 group-hover:scale-105">
+              </button>`).join('')}
+          </div>
+        </div>
+      </section>`;
+
+    const navCard = (q, dir) => `
+      <a href="${productUrl(q)}" class="reveal group flex items-center gap-5 rounded-[1.75rem] bg-white p-6 ring-1 ring-ivory-200 transition hover:ring-gold-500/50 ${dir === 'next' ? 'flex-row-reverse text-right' : ''}">
+        <i data-lucide="${dir === 'next' ? 'arrow-right' : 'arrow-left'}" class="h-6 w-6 shrink-0 text-gold-600 transition group-hover:scale-110" stroke-width="1.5"></i>
+        <span>
+          <span class="eyebrow block text-[0.68rem] font-semibold uppercase text-ink-muted">${dir === 'next' ? 'Siguiente' : 'Anterior'}</span>
+          <span class="mt-1 block font-serif text-2xl font-semibold text-navy-900"><span class="italic text-gold-600">${productNumber(q)}</span> ${q.name}</span>
+        </span>
+      </a>`;
+
+    document.getElementById('detail').innerHTML = `
+      <section class="paper pb-16 pt-14 sm:pt-20">
+        <div class="mx-auto max-w-4xl px-4 text-center sm:px-6">
+          <p class="reveal font-serif text-2xl italic text-gold-600">${productNumber(p)}</p>
+          <h1 class="reveal mt-2 font-serif text-5xl font-semibold leading-[1.05] text-navy-900 sm:text-7xl">${p.name}</h1>
+          ${brand ? `<p class="reveal rule eyebrow mt-6 text-xs font-semibold uppercase text-gold-700 sm:text-sm">Línea oficial ${brand.name}</p>` : ''}
+          <p class="reveal mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl">${p.short}</p>
+          <div class="reveal mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a href="${quoteUrl(p.name)}" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-navy-700 px-8 py-4 font-semibold text-white shadow-lg shadow-navy-700/15 transition hover:bg-navy-900 sm:w-auto">Solicitar cotización <i data-lucide="arrow-right" class="h-5 w-5" stroke-width="1.75"></i></a>
+            <a href="productos.html" class="inline-flex w-full items-center justify-center gap-2 rounded-full border border-navy-700/25 px-8 py-4 font-semibold text-navy-800 transition hover:border-gold-500 hover:text-gold-700 sm:w-auto"><i data-lucide="layout-grid" class="h-5 w-5" stroke-width="1.5"></i> Todos los productos</a>
+          </div>
+        </div>
+        <div class="reveal mx-auto mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <img src="${UP + p.banner}" alt="${p.name} en las instalaciones de H. Trimarchi" class="aspect-[5/2] w-full rounded-[2rem] object-cover shadow-2xl shadow-navy-900/10 sm:aspect-[4/1]">
+        </div>
+      </section>
+
+      <section class="border-t border-ivory-200 bg-white py-20 sm:py-24">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-3xl text-center">
+            <p class="reveal font-serif text-[1.65rem] font-medium leading-snug text-navy-900 sm:text-3xl">${p.intro[0]}</p>
+            ${p.intro.slice(1).map(t => `<p class="reveal mt-6 text-lg leading-relaxed text-ink-soft">${t}</p>`).join('')}
+          </div>
+          ${featuresHTML}
+        </div>
+      </section>
+
+      ${modelsHTML}
+      ${tablesHTML}
+      ${galleryHTML}
+
+      <section class="border-t border-ivory-200 bg-ivory-100 py-16">
+        <div class="mx-auto grid max-w-5xl gap-5 px-4 sm:grid-cols-2 sm:px-6">
+          ${navCard(prev, 'prev')}
+          ${navCard(next, 'next')}
+        </div>
+      </section>
+
+      <div data-cta></div>`;
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    document.querySelectorAll('.gallery-item').forEach(btn => btn.addEventListener('click', () => {
+      lightboxImg.src = btn.dataset.src;
+      lightboxImg.alt = btn.querySelector('img').alt;
+      lightbox.showModal();
+    }));
+    document.getElementById('lightboxClose').addEventListener('click', () => lightbox.close());
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.close(); });
+  </script>
+  <script src="assets/layout.js"></script>
+</body>
+</html>

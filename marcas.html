@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marcas | H. Trimarchi S.R.L.</title>
+  <meta name="description" content="Representantes y distribuidores oficiales de Fermator, Moris, Montanari Giulio, Monteferro, IPH, Weco y otras firmas líderes de la industria del ascensor.">
+  <meta property="og:title" content="Marcas | H. Trimarchi S.R.L.">
+  <link rel="icon" href="https://trimarchi.com.ar/wp-content/uploads/2025/08/cropped-HT-150x150.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/head.js"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="marcas" class="bg-ivory-50 font-sans text-ink antialiased overflow-x-hidden">
+  <div id="site-header"></div>
+
+  <main>
+    <!-- Page header -->
+    <section class="paper pb-16 pt-14 sm:pt-20">
+      <div class="mx-auto max-w-4xl px-4 text-center sm:px-6">
+        <p class="reveal rule eyebrow text-xs font-semibold uppercase text-gold-700 sm:text-sm">Las mejores marcas</p>
+        <h1 class="reveal mt-6 font-serif text-[2.6rem] font-semibold leading-[1.08] text-navy-900 sm:text-6xl lg:text-7xl">Representantes <em class="font-medium text-gold-600">oficiales</em> de los principales fabricantes</h1>
+        <p class="reveal mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl">Somos distribuidores exclusivos de las mejores firmas nacionales e internacionales, con el respaldo y la garantía de cada fabricante.</p>
+      </div>
+    </section>
+
+    <!-- Brands -->
+    <section class="border-t border-ivory-200 bg-ivory-100 py-20 sm:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div id="brandCards" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+    </section>
+
+    <!-- Why official -->
+    <section class="border-t border-ivory-200 bg-white py-20 sm:py-24">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="reveal rule eyebrow text-xs font-semibold uppercase text-gold-700 sm:text-sm">Representación oficial</p>
+          <h2 class="reveal mt-5 font-serif text-4xl font-semibold leading-tight text-navy-900 sm:text-5xl">Lo que significa comprar a un representante oficial</h2>
+        </div>
+        <div class="mt-14 grid gap-12 md:grid-cols-3 md:gap-0 md:divide-x md:divide-ivory-200">
+          <div class="reveal px-8 text-center">
+            <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-gold-500/40 text-gold-600"><i data-lucide="shield-check" class="h-7 w-7" stroke-width="1.25"></i></span>
+            <h3 class="mt-5 font-serif text-3xl font-semibold text-navy-900">Garantía de origen</h3>
+            <p class="mt-2 leading-relaxed text-ink-soft">Productos originales, con la garantía de calidad de cada fabricante.</p>
+          </div>
+          <div class="reveal px-8 text-center">
+            <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-gold-500/40 text-gold-600"><i data-lucide="file-text" class="h-7 w-7" stroke-width="1.25"></i></span>
+            <h3 class="mt-5 font-serif text-3xl font-semibold text-navy-900">Fichas técnicas</h3>
+            <p class="mt-2 leading-relaxed text-ink-soft">Información técnica de cada modelo para elegir con precisión.</p>
+          </div>
+          <div class="reveal px-8 text-center">
+            <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-gold-500/40 text-gold-600"><i data-lucide="handshake" class="h-7 w-7" stroke-width="1.25"></i></span>
+            <h3 class="mt-5 font-serif text-3xl font-semibold text-navy-900">Respaldo técnico</h3>
+            <p class="mt-2 leading-relaxed text-ink-soft">Asesoramiento de un equipo con más de 40 años en el rubro.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div data-cta></div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/site.js"></script>
+  <script>
+    document.getElementById('brandCards').innerHTML = BRANDS.map((b, i) => {
+      const lines = PRODUCTS.filter(p => p.brand === b.id);
+      return `
+        <article class="reveal group flex flex-col overflow-hidden rounded-[1.75rem] bg-white ring-1 ring-ivory-200 transition duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-navy-900/10 hover:ring-gold-500/40" style="transition-delay:${(i % 3) * 90}ms">
+          <div class="flex h-44 items-center justify-center overflow-hidden border-b border-ivory-200 px-10">${brandLogoHTML(b)}</div>
+          <div class="flex flex-1 flex-col p-7 text-center">
+            <h2 class="font-serif text-3xl font-semibold text-navy-900">${b.name}</h2>
+            <p class="mt-3 flex-1 leading-relaxed ${b.desc ? 'text-ink-soft' : 'text-ink-muted'}">${b.desc || '[Descripción y línea de productos a confirmar]'}</p>
+            ${lines.length
+              ? `<div class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">${lines.map(p => `<a href="${productUrl(p)}" class="inline-flex items-center gap-2 border-b border-gold-500/50 pb-1 font-semibold text-navy-800 transition hover:gap-3 hover:border-navy-800">${p.name} <i data-lucide="arrow-right" class="h-4 w-4" stroke-width="1.75"></i></a>`).join('')}</div>`
+              : `<a href="contacto.html#formulario" class="mx-auto mt-6 inline-flex items-center gap-2 border-b border-gold-500/50 pb-1 font-semibold text-navy-800 transition hover:gap-3 hover:border-navy-800">Consultar productos <i data-lucide="arrow-right" class="h-4 w-4" stroke-width="1.75"></i></a>`}
+          </div>
+        </article>`;
+    }).join('');
+  </script>
+  <script src="assets/layout.js"></script>
+</body>
+</html>
