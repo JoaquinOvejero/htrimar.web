@@ -1,8 +1,5 @@
 # Rediseño web — H. Trimarchi S.R.L.
 
-Prototipo navegable de la propuesta de rediseño para [trimarchi.com.ar](https://trimarchi.com.ar).
-
-> **Uso interno.** Es una propuesta que todavía no aprobó la empresa: no la publiques en un link público (GitHub Pages u otro) sin su autorización.
 
 ## Cómo verlo
 
