@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Productos | H. Trimarchi S.R.L.</title>
+  <meta name="description" content="Repuestos, kits de instalación, cabinas, centrales hidráulicas, máquinas, pistones, puertas, guías, cables y controles para ascensores. Más de 9.000 productos en stock.">
+  <link rel="icon" href="https://trimarchi.com.ar/wp-content/uploads/2025/08/cropped-HT-150x150.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/c-head.js"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/c.css">
+</head>
+<body data-page="productos" class="bg-ivory-50 font-sans text-ink antialiased overflow-x-hidden">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="paper pb-12 pt-14 sm:pt-20">
+      <div class="mx-auto max-w-4xl px-4 text-center sm:px-6">
+        <p class="reveal rule eyebrow text-xs font-semibold uppercase text-gold-700 sm:text-sm">Productos</p>
+        <h1 class="reveal mt-6 font-serif text-[2.6rem] font-semibold leading-[1.08] text-navy-900 sm:text-6xl lg:text-7xl">Uno de los catálogos <em class="font-medium text-gold-600">más completos</em> del mercado</h1>
+        <p class="reveal mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">Más de 9.000 productos en stock. Filtre por rubro o marca, o sume productos a su lista para pedir una sola cotización.</p>
+      </div>
+
+      <div class="mx-auto mt-10 max-w-5xl px-4 sm:px-6">
+        <div class="reveal rounded-[1.75rem] bg-white p-4 shadow-lg shadow-navy-900/5 ring-1 ring-ivory-200 sm:p-5">
+          <div class="grid gap-3 md:grid-cols-[1fr_15rem]">
+            <label class="flex items-center gap-3 rounded-full bg-ivory-50 px-5 ring-1 ring-ivory-200 focus-within:ring-gold-500">
+              <i data-lucide="search" class="h-5 w-5 text-gold-600" stroke-width="1.5"></i>
+              <input id="q" type="search" placeholder="Filtrar por producto, modelo o marca" class="h-12 flex-1 bg-transparent text-navy-900 outline-none placeholder:text-ink-muted" aria-label="Filtrar el catálogo">
+            </label>
+            <select id="brand" class="h-12 rounded-full bg-ivory-50 px-5 text-navy-900 outline-none ring-1 ring-ivory-200 focus:ring-gold-500" aria-label="Filtrar por marca">
+              <option value="">Todas las marcas</option>
+            </select>
+          </div>
+          <div id="chips" class="no-scrollbar mt-3 flex gap-2 overflow-x-auto md:justify-center" role="group" aria-label="Rubros"></div>
+        </div>
+        <p id="count" class="mt-4 text-center font-mono text-sm text-ink-muted" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <div id="sections" class="border-t border-ivory-200 bg-ivory-100"></div>
+    <div id="empty" class="hidden bg-ivory-100 px-4 py-20 text-center">
+      <i data-lucide="search-x" class="mx-auto h-10 w-10 text-gold-500" stroke-width="1.25"></i>
+      <p class="mt-4 font-serif text-3xl font-semibold text-navy-900">No encontramos ese producto en la web</p>
+      <p class="mx-auto mt-2 max-w-md text-ink-soft">Tenemos más de 9.000 productos en stock: escríbanos y lo buscamos por usted.</p>
+      <a href="contacto.html#formulario" class="mt-6 inline-flex rounded-full bg-navy-700 px-7 py-3.5 font-semibold text-white">Consultar</a>
+    </div>
+
+    <div data-cta></div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../assets/site.js"></script>
+  <script src="assets/c-core.js"></script>
+  <script>
+    document.getElementById('sections').innerHTML = C_CATEGORIES.map(c => `
+      <section id="rubro-${c.id}" data-cat-section="${c.id}" class="scroll-mt-24 py-12 sm:py-14">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="text-center"><p class="rule eyebrow text-xs font-semibold uppercase text-gold-700 sm:text-sm">${c.name}</p></div>
+          <div class="mt-8 grid gap-5 lg:grid-cols-2">${c.slugs.map(s => productRowHTML(PRODUCTS.find(p => p.slug === s))).join('')}</div>
+        </div>
+      </section>`).join('');
+
+    const brandSelect = document.getElementById('brand');
+    brandSelect.insertAdjacentHTML('beforeend', BRANDS.filter(b => PRODUCTS.some(p => p.brand === b.id)).map(b => `<option value="${b.id}">${b.name}</option>`).join(''));
+
+    const chips = document.getElementById('chips');
+    chips.innerHTML = [{ id: '', name: 'Todos los rubros' }, ...C_CATEGORIES].map(c => `<button type="button" data-cat="${c.id}" class="shrink-0 rounded-full px-4 py-2 text-sm font-medium transition">${c.name}</button>`).join('');
+
+    let cat = C_CATEGORIES.some(c => c.id === new URLSearchParams(location.search).get('rubro')) ? new URLSearchParams(location.search).get('rubro') : '';
+    const q = document.getElementById('q');
+    const productText = Object.fromEntries(PRODUCTS.map(p => [p.slug, norm([p.name, p.short, p.brand && brandById(p.brand).name, ...(p.models || []).flatMap(m => [m.name, ...(m.specs || [])])].join(' '))]));
+
+    const apply = () => {
+      const terms = norm(q.value).trim().split(/\s+/).filter(Boolean);
+      let visible = 0;
+      document.querySelectorAll('[data-product]').forEach(card => {
+        const ok = (!cat || card.dataset.category === cat)
+          && (!brandSelect.value || card.dataset.brand === brandSelect.value)
+          && terms.every(t => productText[card.dataset.product].includes(t));
+        card.classList.toggle('hidden', !ok);
+        if (ok) visible += 1;
+      });
+      document.querySelectorAll('[data-cat-section]').forEach(sec => sec.classList.toggle('hidden', !sec.querySelector('[data-product]:not(.hidden)')));
+      chips.querySelectorAll('[data-cat]').forEach(b => {
+        const on = b.dataset.cat === cat;
+        b.className = `shrink-0 rounded-full px-4 py-2 text-sm font-medium transition ${on ? 'bg-navy-700 text-white' : 'bg-ivory-50 text-ink-soft ring-1 ring-ivory-200 hover:ring-gold-500'}`;
+        b.setAttribute('aria-pressed', on);
+      });
+      document.getElementById('count').textContent = `${visible} ${visible === 1 ? 'línea de productos' : 'líneas de productos'}`;
+      document.getElementById('empty').classList.toggle('hidden', visible > 0);
+      document.getElementById('sections').classList.toggle('hidden', visible === 0);
+    };
+    chips.addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (b) { cat = b.dataset.cat; apply(); } });
+    q.addEventListener('input', apply);
+    brandSelect.addEventListener('change', apply);
+    apply();
+  </script>
+  <script src="assets/c-layout.js"></script>
+</body>
+</html>

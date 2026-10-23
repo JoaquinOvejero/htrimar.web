@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto y sedes | H. Trimarchi S.R.L.</title>
+  <meta name="description" content="Solicite su cotización o haga una consulta urgente. Casa matriz en Abraham J. Luppi 1535 y sucursal en Tte. Gral. Eustaquio Frías 182, CABA.">
+  <link rel="icon" href="https://trimarchi.com.ar/wp-content/uploads/2025/08/cropped-HT-150x150.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/c-head.js"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/c.css">
+</head>
+<body data-page="contacto" class="bg-ivory-50 font-sans text-ink antialiased overflow-x-hidden">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="paper pb-16 pt-14 sm:pt-20">
+      <div class="mx-auto max-w-4xl px-4 text-center sm:px-6">
+        <p class="reveal rule eyebrow text-xs font-semibold uppercase text-gold-700 sm:text-sm">Contacto</p>
+        <h1 class="reveal mt-6 font-serif text-[2.6rem] font-semibold leading-[1.08] text-navy-900 sm:text-6xl lg:text-7xl">Estamos para <em class="font-medium text-gold-600">asesorarlo</em></h1>
+        <p class="reveal mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">Pida una cotización, consulte por un repuesto o avísenos si tiene un equipo parado.</p>
+      </div>
+      <ul class="reveal mx-auto mt-12 grid max-w-5xl gap-4 px-4 sm:grid-cols-3 sm:px-6">
+        <li><a href="mailto:info@trimarchi.com.ar" class="flex h-full flex-col items-center gap-2 rounded-2xl bg-white p-7 text-center ring-1 ring-ivory-200 transition hover:ring-gold-500"><i data-lucide="mail" class="h-6 w-6 text-gold-600" stroke-width="1.5"></i><span class="text-sm text-ink-muted">Email</span><span class="font-semibold text-navy-900">info@trimarchi.com.ar</span></a></li>
+        <li class="flex h-full flex-col items-center gap-2 rounded-2xl border border-dashed border-gold-500/50 bg-white/60 p-7 text-center"><i data-lucide="message-circle" class="h-6 w-6 text-gold-600" stroke-width="1.5"></i><span class="text-sm text-ink-muted">Teléfono / WhatsApp</span><span class="font-semibold text-ink-muted">[Número a completar]</span></li>
+        <li><a href="https://www.instagram.com/htrimarchi.srl/" target="_blank" rel="noopener" class="flex h-full flex-col items-center gap-2 rounded-2xl bg-white p-7 text-center ring-1 ring-ivory-200 transition hover:ring-gold-500"><i data-lucide="instagram" class="h-6 w-6 text-gold-600" stroke-width="1.5"></i><span class="text-sm text-ink-muted">Instagram</span><span class="font-semibold text-navy-900">@htrimarchi.srl</span></a></li>
+      </ul>
+    </section>
+
+    <!-- Form (B's features) -->
+    <section id="formulario" class="scroll-mt-24 border-y border-ivory-200 bg-ivory-100 py-16 sm:py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div id="formHead"></div>
+        <div class="mt-12 grid gap-8 lg:grid-cols-[1.45fr_1fr]">
+          <form id="contactForm" class="reveal rounded-[2rem] bg-white p-6 shadow-xl shadow-navy-900/5 ring-1 ring-ivory-200 sm:p-10" novalidate>
+            <label id="urgentBox" class="flex cursor-pointer items-center gap-4 rounded-2xl p-4 ring-1 transition">
+              <input id="urgent" name="urgente" type="checkbox" class="peer sr-only">
+              <span class="relative h-7 w-12 shrink-0 rounded-full bg-ivory-200 transition after:absolute after:left-1 after:top-1 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition peer-checked:bg-gold-500 peer-checked:after:translate-x-5"></span>
+              <span><span class="block font-semibold text-navy-900">Es urgente: tengo un equipo parado</span><span class="text-sm text-ink-muted">La consulta llega marcada como urgente.</span></span>
+            </label>
+            <div class="mt-6 grid gap-6 sm:grid-cols-2">
+              <label class="block"><span class="font-medium text-navy-900">Nombre *</span><input name="nombre" required autocomplete="name" class="mt-2 w-full rounded-xl border border-ivory-200 bg-ivory-50 px-4 py-3.5 text-lg outline-none transition focus:border-gold-500 focus:bg-white focus:ring-2 focus:ring-gold-300"></label>
+              <label class="block"><span class="font-medium text-navy-900">Empresa</span><input name="empresa" autocomplete="organization" class="mt-2 w-full rounded-xl border border-ivory-200 bg-ivory-50 px-4 py-3.5 text-lg outline-none transition focus:border-gold-500 focus:bg-white focus:ring-2 focus:ring-gold-300"></label>
+              <label class="block"><span class="font-medium text-navy-900">Email *</span><input name="email" type="email" required autocomplete="email" class="mt-2 w-full rounded-xl border border-ivory-200 bg-ivory-50 px-4 py-3.5 text-lg outline-none transition focus:border-gold-500 focus:bg-white focus:ring-2 focus:ring-gold-300"></label>
+              <label class="block"><span class="font-medium text-navy-900">Teléfono *</span><input name="telefono" type="tel" required autocomplete="tel" class="mt-2 w-full rounded-xl border border-ivory-200 bg-ivory-50 px-4 py-3.5 text-lg outline-none transition focus:border-gold-500 focus:bg-white focus:ring-2 focus:ring-gold-300"></label>
+              <label class="block"><span class="font-medium text-navy-900">Usted es…</span>
+                <select name="perfil" class="mt-2 w-full rounded-xl border border-ivory-200 bg-ivory-50 px-4 py-3.5 text-lg outline-none transition focus:border-gold-500 focus:bg-white focus:ring-2 focus:ring-gold-300">
+                  <option>Instalador</option><option>Conservador / mantenimiento</option><option>Administración o consorcio</option><option>Constructora</option><option>Otro</option>
+                </select></label>
+              <label class="block"><span class="font-medium text-navy-900">Producto</span>
+                <select id="producto" name="producto" class="mt-2 w-full rounded-xl border border-ivory-200 bg-ivory-50 px-4 py-3.5 text-lg outline-none transition focus:border-gold-500 focus:bg-white focus:ring-2 focus:ring-gold-300"><option value="Consulta general">Consulta general</option></select></label>
+              <label class="block sm:col-span-2"><span class="font-medium text-navy-900">Mensaje</span>
+                <textarea id="mensaje" name="mensaje" rows="5" placeholder="Marca y modelo del equipo, pieza, medidas, cantidad…" class="mt-2 w-full rounded-xl border border-ivory-200 bg-ivory-50 px-4 py-3.5 text-lg outline-none transition focus:border-gold-500 focus:bg-white focus:ring-2 focus:ring-gold-300"></textarea></label>
+              <label class="block sm:col-span-2"><span class="font-medium text-navy-900">Foto de la pieza o de la chapa del equipo</span>
+                <input name="foto" type="file" accept="image/*" class="mt-2 block w-full rounded-xl border border-dashed border-gold-500/50 bg-ivory-50 p-3 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-navy-700 file:px-4 file:py-2 file:font-semibold file:text-white">
+                <span class="mt-1 block text-xs text-ink-muted">Ayuda a identificar el repuesto. En la versión publicada la foto se adjunta a la consulta.</span></label>
+            </div>
+            <label id="listBox" class="mt-5 hidden items-center gap-3 rounded-xl bg-ivory-50 p-4 ring-1 ring-ivory-200">
+              <input id="includeList" type="checkbox" checked class="h-5 w-5 accent-[#232c65]">
+              <span class="text-navy-900">Incluir mi lista de cotización (<span data-list-count>0</span> ítems)</span>
+            </label>
+            <p id="formError" class="mt-4 hidden rounded-xl bg-gold-300/40 px-4 py-3 text-sm text-navy-950" role="alert"></p>
+            <div class="mt-8 text-center">
+              <button type="submit" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-navy-700 px-10 py-4 text-lg font-semibold text-white transition hover:bg-navy-900 sm:w-auto">Enviar consulta <i data-lucide="send" class="h-5 w-5" stroke-width="1.75"></i></button>
+              <p class="mt-3 text-sm text-ink-muted">Se abrirá su programa de correo con la consulta lista. Usamos sus datos solo para responderle.</p>
+            </div>
+          </form>
+
+          <aside class="space-y-5 lg:sticky lg:top-28 lg:self-start">
+            <div class="reveal rounded-[1.75rem] bg-white p-6 ring-1 ring-ivory-200">
+              <div class="flex items-center justify-between"><p class="font-serif text-2xl font-semibold text-navy-900">Su lista de cotización</p><button type="button" data-quote-open class="text-sm font-semibold text-navy-800 underline decoration-gold-500/60">Editar</button></div>
+              <ul id="listPreview" class="mt-3 space-y-1.5 text-[0.95rem]"></ul>
+            </div>
+            <div class="reveal paper-dark rounded-[1.75rem] bg-navy-900 p-6 text-slate-300">
+              <p class="font-serif text-2xl font-semibold text-white">Para responderle más rápido</p>
+              <ul class="mt-3 space-y-2">
+                <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-gold-300"></i>Marca y modelo del equipo.</li>
+                <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-gold-300"></i>Foto de la pieza o de la chapa identificatoria.</li>
+                <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-gold-300"></i>Medidas y cantidad que necesita.</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Locations (A) -->
+    <section id="sedes" class="scroll-mt-24 py-16 sm:py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div id="sedesHead"></div>
+        <div class="mt-12 grid gap-8 lg:grid-cols-2">
+          <article class="reveal flex flex-col overflow-hidden rounded-[2rem] bg-white shadow-sm ring-1 ring-ivory-200">
+            <iframe title="Mapa Casa matriz - Abraham J. Luppi 1535" src="https://www.google.com/maps?q=Abraham+J.+Luppi+1535,+C1437FRN+CABA,+Argentina&output=embed" class="h-72 w-full border-0 grayscale-[35%]" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="flex flex-1 flex-col items-center p-8 text-center">
+              <p class="eyebrow text-xs font-semibold uppercase text-gold-700">Casa matriz</p>
+              <p class="mt-3 font-serif text-3xl font-semibold text-navy-900 tabular">Abraham J. Luppi 1535</p>
+              <p class="mt-1 text-ink-soft">C1437FRN · Villa Pompeya, CABA</p>
+              <p class="mt-1 text-sm text-ink-muted">Depósitos, fábrica y oficinas · [Horario a confirmar]</p>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=Abraham+J.+Luppi+1535,+CABA,+Argentina" target="_blank" rel="noopener" class="mt-auto inline-flex items-center gap-2 border-b border-gold-500/50 pb-1 pt-6 font-semibold text-navy-800 hover:border-navy-800">Cómo llegar <i data-lucide="navigation" class="h-4 w-4" stroke-width="1.75"></i></a>
+            </div>
+          </article>
+          <article class="reveal flex flex-col overflow-hidden rounded-[2rem] bg-white shadow-sm ring-1 ring-ivory-200">
+            <iframe title="Mapa Sucursal - Tte. Gral. Eustaquio Frías 182" src="https://www.google.com/maps?q=Eustaquio+Fr%C3%ADas+182,+C1414DVD+CABA,+Argentina&output=embed" class="h-72 w-full border-0 grayscale-[35%]" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="flex flex-1 flex-col items-center p-8 text-center">
+              <p class="eyebrow text-xs font-semibold uppercase text-gold-700">Sucursal</p>
+              <p class="mt-3 font-serif text-3xl font-semibold text-navy-900 tabular">Tte. Gral. Eustaquio Frías 182</p>
+              <p class="mt-1 text-ink-soft">C1414DVD · Parque Centenario, CABA</p>
+              <p class="mt-1 text-sm text-ink-muted">[Horario a confirmar]</p>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=Eustaquio+Fr%C3%ADas+182,+CABA,+Argentina" target="_blank" rel="noopener" class="mt-auto inline-flex items-center gap-2 border-b border-gold-500/50 pb-1 pt-6 font-semibold text-navy-800 hover:border-navy-800">Cómo llegar <i data-lucide="navigation" class="h-4 w-4" stroke-width="1.75"></i></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../assets/site.js"></script>
+  <script src="assets/c-core.js"></script>
+  <script>
+    document.getElementById('formHead').innerHTML = sectionHead('Formulario', 'Solicite su cotización');
+    document.getElementById('sedesHead').innerHTML = sectionHead('Sedes', 'Dos sedes en la Ciudad de Buenos Aires');
+
+    const params = new URLSearchParams(location.search);
+    const form = document.getElementById('contactForm');
+    const select = document.getElementById('producto');
+    select.insertAdjacentHTML('beforeend', PRODUCTS.map(p => `<option value="${esc(p.name)}">${esc(p.name)}</option>`).join(''));
+    const wanted = params.get('producto');
+    if (wanted && PRODUCTS.some(p => p.name === wanted)) select.value = wanted;
+    else if (wanted) document.getElementById('mensaje').value = `Consulta sobre ${wanted}: `;
+
+    const urgent = document.getElementById('urgent');
+    const urgentBox = document.getElementById('urgentBox');
+    const paintUrgent = () => urgentBox.className = `flex cursor-pointer items-center gap-4 rounded-2xl p-4 ring-1 transition ${urgent.checked ? 'bg-gold-300/30 ring-gold-500' : 'ring-ivory-200'}`;
+    urgent.checked = params.get('urgente') === '1';
+    urgent.addEventListener('change', paintUrgent);
+    paintUrgent();
+
+    const renderList = () => {
+      const items = Quote.items();
+      document.getElementById('listPreview').innerHTML = items.length
+        ? items.map(i => `<li class="flex gap-2"><span class="font-mono text-ink-muted">${i.qty}×</span><span class="text-navy-900">${esc(Quote.label(i))}</span></li>`).join('')
+        : `<li class="text-ink-muted">Vacía. Sume productos desde <a href="productos.html" class="font-semibold text-navy-800 underline decoration-gold-500/60">Productos</a>.</li>`;
+      const box = document.getElementById('listBox');
+      box.classList.toggle('hidden', !items.length);
+      box.classList.toggle('flex', !!items.length);
+      box.querySelector('[data-list-count]').textContent = Quote.count();
+    };
+    document.addEventListener('quote:change', renderList);
+    renderList();
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const f = new FormData(form);
+      const missing = ['nombre', 'email', 'telefono'].filter(k => !String(f.get(k) || '').trim());
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(f.get('email') || ''));
+      const error = document.getElementById('formError');
+      if (missing.length || !emailOk) {
+        error.textContent = missing.length ? 'Complete nombre, email y teléfono.' : 'Revise el email: no parece válido.';
+        error.classList.remove('hidden');
+        return;
+      }
+      error.classList.add('hidden');
+      const photo = f.get('foto');
+      const list = document.getElementById('includeList').checked && Quote.items().length ? `\n\nLista de cotización:\n${Quote.text()}` : '';
+      const body = `${urgent.checked ? 'URGENTE: equipo parado\n\n' : ''}Nombre: ${f.get('nombre')}\nEmpresa: ${f.get('empresa')}\nEmail: ${f.get('email')}\nTeléfono: ${f.get('telefono')}\nPerfil: ${f.get('perfil')}\nProducto: ${f.get('producto')}\n\n${f.get('mensaje')}${list}${photo && photo.name ? `\n\n(Foto seleccionada: ${photo.name}. Adjúntela a este correo.)` : ''}`;
+      const subject = `${urgent.checked ? '[URGENTE] ' : ''}Cotización - ${f.get('producto')}`;
+      location.href = `mailto:${C_CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
+  <script src="assets/c-layout.js"></script>
+</body>
+</html>

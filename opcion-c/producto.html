@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Producto | H. Trimarchi S.R.L.</title>
+  <meta name="description" content="Productos para ascensores de H. Trimarchi S.R.L.">
+  <link rel="icon" href="https://trimarchi.com.ar/wp-content/uploads/2025/08/cropped-HT-150x150.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/c-head.js"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/c.css">
+</head>
+<body data-page="productos" class="bg-ivory-50 font-sans text-ink antialiased overflow-x-hidden">
+  <div id="site-header"></div>
+  <main id="detail"></main>
+  <div id="site-footer"></div>
+
+  <script src="../assets/site.js"></script>
+  <script src="assets/c-core.js"></script>
+  <script>
+    const slug = new URLSearchParams(location.search).get('p');
+    const p = PRODUCTS.find(x => x.slug === slug) || PRODUCTS[0];
+    const idx = PRODUCTS.indexOf(p);
+    const prev = PRODUCTS[(idx - 1 + PRODUCTS.length) % PRODUCTS.length];
+    const next = PRODUCTS[(idx + 1) % PRODUCTS.length];
+    const brand = p.brand && brandById(p.brand);
+    const cat = categoryOf(p);
+    document.title = `${productLabel(p)} | H. Trimarchi S.R.L.`;
+    document.querySelector('meta[name="description"]').content = p.short;
+
+    const images = [...new Set([p.img, ...p.gallery])];
+    const fitClass = img => (p.fit === 'contain' || (p.galleryFit !== 'cover' && img !== p.img) ? 'object-contain p-6' : 'object-cover');
+    const wa = whatsappUrl(`Hola, quiero consultar por ${p.name}.`);
+    const label = text => `<p class="rule eyebrow text-xs font-semibold uppercase text-gold-700 sm:text-sm">${text}</p>`;
+
+    /* Hero: gallery left, data right */
+    const hero = `
+      <section class="paper border-b border-ivory-200">
+        <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+          <a href="productos.html${cat ? `?rubro=${cat.id}` : ''}" class="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-gold-700"><i data-lucide="arrow-left" class="h-4 w-4" stroke-width="1.75"></i> Productos${cat ? ` · ${cat.name}` : ''}</a>
+          <div class="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <div class="min-w-0">
+              <div class="aspect-square overflow-hidden rounded-[2rem] bg-white shadow-xl shadow-navy-900/5 ring-1 ring-ivory-200">
+                <img id="mainImg" src="${UP + images[0]}" alt="${esc(productLabel(p))}" class="h-full w-full ${fitClass(images[0])}">
+              </div>
+              ${images.length > 1 ? `<div class="no-scrollbar mt-4 flex gap-3 overflow-x-auto">
+                ${images.map((img, i) => `<button type="button" data-img="${UP + img}" data-fit="${fitClass(img)}" class="thumb h-20 w-20 shrink-0 overflow-hidden rounded-2xl bg-white ring-2 ${i === 0 ? 'ring-gold-500' : 'ring-ivory-200'}" aria-label="Ver imagen ${i + 1}">
+                  <img src="${UP + img}" alt="" loading="lazy" class="h-full w-full ${fitClass(img).replace('p-6', 'p-1.5')}"></button>`).join('')}
+              </div>` : ''}
+            </div>
+            <div class="min-w-0">
+              <p class="font-serif text-2xl italic text-gold-600">${productNumber(p)}</p>
+              <h1 class="mt-1 font-serif text-5xl font-semibold leading-[1.04] text-navy-900 sm:text-6xl">${esc(p.name)}</h1>
+              ${brand ? `<p class="mt-4 eyebrow text-xs font-semibold uppercase text-gold-700">Línea oficial ${esc(brand.name)}</p>` : ''}
+              <p class="mt-5 font-serif text-2xl leading-snug text-navy-900">${esc(p.short)}</p>
+              ${p.intro.map(t => `<p class="mt-4 leading-relaxed text-ink-soft">${esc(t)}</p>`).join('')}
+              <ul class="mt-6 grid gap-2.5 sm:grid-cols-2">
+                ${p.features.map(f => `<li class="flex gap-2.5 text-[0.95rem] text-navy-900"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-gold-600" stroke-width="2"></i><span>${esc(f)}</span></li>`).join('')}
+              </ul>
+              <div class="mt-8 flex flex-wrap gap-3">
+                ${addButton(p.slug, '', 'Agregar a la cotización', 'px-7 py-4 text-base')}
+                ${wa ? `<a href="${wa}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-navy-700/20 bg-white px-7 py-4 font-semibold text-navy-900 hover:border-gold-500"><i data-lucide="message-circle" class="h-5 w-5" stroke-width="1.5"></i> WhatsApp</a>`
+                    : `<span class="inline-flex items-center gap-2 rounded-full border border-dashed border-gold-500/50 px-7 py-4 text-ink-muted"><i data-lucide="message-circle" class="h-5 w-5" stroke-width="1.5"></i> WhatsApp [número a completar]</span>`}
+              </div>
+              ${p.models ? `<a href="#modelos" class="mt-6 inline-flex items-center gap-2 border-b border-gold-500/50 pb-1 text-sm font-semibold text-navy-800"><i data-lucide="arrow-down" class="h-4 w-4"></i> Ver los ${p.models.length} modelos</a>` : ''}
+            </div>
+          </div>
+        </div>
+      </section>`;
+
+    /* Models: rows with 360° space, specs, datasheet and "quote" per model */
+    let models = '';
+    if (p.models) {
+      const withSpecs = p.models.some(m => m.specs);
+      models = `
+        <section id="modelos" class="scroll-mt-24 bg-ivory-100 py-16 sm:py-20">
+          <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            ${sectionHead(p.modelsEyebrow || 'Modelos y variantes', p.modelsTitle || (withSpecs ? 'Elija el modelo' : 'Opciones disponibles'))}
+            ${withSpecs ? `
+              <div class="mt-12 space-y-4">
+                ${p.models.map(m => `
+                  <article class="reveal grid gap-5 rounded-[1.5rem] bg-white p-5 ring-1 ring-ivory-200 sm:p-6 md:grid-cols-[${p.view360 ? '11rem_' : ''}1fr_auto] md:items-center">
+                    ${p.view360 ? `<div class="flex aspect-video flex-col items-center justify-center gap-1 rounded-2xl border border-dashed border-gold-500/50 bg-ivory-50 text-center" data-video="${m.video ? UP + m.video : ''}">
+                      <i data-lucide="rotate-3d" class="h-6 w-6 text-gold-600" stroke-width="1.25"></i><span class="eyebrow text-[0.6rem] font-semibold uppercase text-gold-700">Vista 360°</span><span class="px-2 text-[0.65rem] text-ink-muted">Espacio para el video</span></div>` : ''}
+                    <div>
+                      <h3 class="font-serif text-3xl font-semibold text-navy-900 tabular">${esc(m.name)}</h3>
+                      <ul class="mt-2 grid gap-x-6 gap-y-1 text-[0.95rem] text-ink-soft sm:grid-cols-2">${m.specs.map(s => `<li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-gold-500"></span>${esc(s)}</li>`).join('')}</ul>
+                    </div>
+                    <div class="flex flex-wrap gap-2 md:flex-col md:items-stretch">
+                      ${addButton(p.slug, m.name, 'Cotizar')}
+                      ${m.pdf ? `<a href="${esc(m.pdf)}" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-navy-700/20 px-5 py-2.5 text-sm font-semibold text-navy-800 hover:border-gold-500 hover:text-gold-700"><i data-lucide="file-text" class="h-4 w-4" stroke-width="1.5"></i> Ficha técnica</a>` : ''}
+                    </div>
+                  </article>`).join('')}
+              </div>` : `
+              <ul class="reveal mt-10 flex flex-wrap justify-center gap-3">
+                ${p.models.map(m => `<li class="inline-flex items-center gap-2 rounded-full bg-white py-1.5 pl-5 pr-1.5 text-navy-900 ring-1 ring-ivory-200">${esc(m.name)}
+                  <button type="button" data-quote-add data-slug="${p.slug}" data-model="${esc(m.name)}" class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-navy-700 text-white hover:bg-navy-900" aria-label="Agregar ${esc(m.name)} a la cotización"><i data-lucide="plus" class="h-4 w-4"></i></button></li>`).join('')}
+              </ul>`}
+          </div>
+        </section>`;
+    }
+
+    /* Technical tables (A's look, mono figures) with a row filter (B) */
+    let tables = '';
+    if (p.tables) {
+      const compact = p.tables.every(t => t.columns.length <= 3 && t.rows.every(r => r.join('').length < 24));
+      tables = `
+        <section class="border-t border-ivory-200 bg-white py-16 sm:py-20">
+          <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            ${sectionHead('Información técnica', 'Tablas de especificaciones')}
+            <div class="mt-12 ${compact ? `grid items-start gap-6 lg:grid-cols-${p.tables.length}` : 'space-y-8'}">
+              ${p.tables.map((t, ti) => `
+                <figure class="reveal overflow-hidden rounded-[1.75rem] bg-white shadow-sm ring-1 ring-ivory-200 ${!compact && t.columns.length <= 4 ? 'mx-auto w-full max-w-4xl' : ''}">
+                  <figcaption class="flex flex-wrap items-center justify-between gap-3 border-b border-ivory-200 px-6 py-5">
+                    <span><span class="block font-serif text-2xl font-semibold text-navy-900 tabular">${esc(t.title)}</span>${t.caption ? `<span class="block text-sm text-ink-muted">${esc(t.caption)}</span>` : ''}</span>
+                    ${t.rows.length > 4 ? `<label class="flex items-center gap-2 rounded-full bg-ivory-50 px-3 ring-1 ring-ivory-200 focus-within:ring-gold-500"><i data-lucide="filter" class="h-4 w-4 text-gold-600" stroke-width="1.5"></i><input data-table-filter="${ti}" type="search" placeholder="Filtrar" class="h-9 w-28 bg-transparent text-sm outline-none" aria-label="Filtrar ${esc(t.title)}"></label>` : ''}
+                  </figcaption>
+                  <div class="overflow-x-auto">
+                    <table data-table="${ti}" class="w-full ${t.columns.length > 4 ? 'min-w-[720px]' : ''} text-center text-[0.92rem] tabular">
+                      <thead class="bg-ivory-100"><tr>${t.columns.map(([l, u], ci) => `<th scope="col" class="px-3 py-3.5 align-bottom text-xs font-semibold leading-snug text-navy-900 ${ci === 0 ? 'sticky left-0 bg-ivory-100' : ''}">${esc(l)}${u ? `<span class="mt-1 block text-[0.7rem] font-medium text-gold-700">${esc(u)}</span>` : ''}</th>`).join('')}</tr></thead>
+                      <tbody class="font-mono">${t.rows.map(r => `<tr class="border-t border-ivory-200 bg-white even:bg-ivory-50">${r.map((c, ci) => `<td class="whitespace-nowrap px-3 py-2.5 ${ci === 0 ? 'sticky left-0 bg-inherit font-medium text-navy-900' : 'text-ink-soft'}">${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+                    </table>
+                  </div>
+                  ${t.note ? `<p class="border-t border-ivory-200 px-6 py-4 text-center text-sm text-ink-muted">${esc(t.note)}</p>` : ''}
+                </figure>`).join('')}
+            </div>
+            ${p.tablesNote ? `<p class="mt-6 text-center text-sm text-ink-muted">${esc(p.tablesNote)}</p>` : ''}
+          </div>
+        </section>`;
+    }
+
+    /* Previous / next */
+    const navCard = (q, dir) => `
+      <a href="${productUrl(q)}" class="reveal group flex items-center gap-4 rounded-[1.5rem] bg-white p-4 ring-1 ring-ivory-200 hover:ring-gold-500/50 ${dir === 'next' ? 'flex-row-reverse text-right' : ''}">
+        <img src="${UP + q.img}" alt="" loading="lazy" class="h-16 w-16 shrink-0 rounded-xl bg-white ring-1 ring-ivory-200 ${q.fit === 'contain' ? 'object-contain p-1' : 'object-cover'}">
+        <span class="flex-1"><span class="eyebrow block text-[0.62rem] font-semibold uppercase text-ink-muted">${dir === 'next' ? 'Siguiente' : 'Anterior'}</span><span class="mt-1 block font-serif text-2xl font-semibold text-navy-900"><span class="italic text-gold-600">${productNumber(q)}</span> ${esc(q.name)}</span></span>
+        <i data-lucide="${dir === 'next' ? 'arrow-right' : 'arrow-left'}" class="h-5 w-5 text-gold-600" stroke-width="1.5"></i>
+      </a>`;
+    const more = `
+      <section class="border-t border-ivory-200 bg-ivory-100 py-12">
+        <div class="mx-auto grid max-w-5xl gap-4 px-4 sm:px-6 md:grid-cols-2">${navCard(prev, 'prev')}${navCard(next, 'next')}</div>
+      </section>
+      <div data-cta></div>`;
+
+    document.getElementById('detail').innerHTML = hero + models + tables + more;
+
+    const mainImg = document.getElementById('mainImg');
+    document.querySelectorAll('.thumb').forEach(t => t.addEventListener('click', () => {
+      mainImg.src = t.dataset.img;
+      mainImg.className = `h-full w-full ${t.dataset.fit}`;
+      document.querySelectorAll('.thumb').forEach(o => o.classList.replace('ring-gold-500', 'ring-ivory-200'));
+      t.classList.replace('ring-ivory-200', 'ring-gold-500');
+    }));
+
+    document.querySelectorAll('[data-table-filter]').forEach(input => input.addEventListener('input', () => {
+      const term = norm(input.value).trim();
+      document.querySelectorAll(`[data-table="${input.dataset.tableFilter}"] tbody tr`).forEach(tr => tr.classList.toggle('hidden', !!term && !norm(tr.textContent).includes(term)));
+    }));
+  </script>
+  <script src="assets/c-layout.js"></script>
+</body>
+</html>
