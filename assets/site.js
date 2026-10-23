@@ -4,7 +4,7 @@ const UP = 'https://trimarchi.com.ar/wp-content/uploads/';
 /*
   Product fields:
     slug, name, brand?, fit?, img, banner, short, intro[], features[]
-    models?: [{ name, specs?: [], video?: url }]   – modelsTitle / modelsEyebrow override the section heading
+    models?: [{ name, specs?: [], video?: url, pdf?: url }]   – pdf = manufacturer datasheet or catalogue   – modelsTitle / modelsEyebrow override the section heading
     view360?: true  – every model card gets a reserved "Vista 360°" frame (video: original MP4, to plug in later)
     tables?: [{ title, caption?, columns: [[label, unit]], rows: [[...]], groupBy?: true, note? }]
     gallery[], galleryFit?
@@ -83,11 +83,11 @@ const PRODUCTS = [
       'Compatibles con una amplia gama de pistones y configuraciones'
     ],
     models: [
-      { name: 'Modelo CA', video: '2025/08/Hydraulic-unit-CA_Video-Low.mp4', specs: ['Caudal de 55 a 380 l/min', 'Motores de 4,5 a 37 kW', 'Válvulas certificadas a 45 bar', 'Versión compacta con bomba manual integrada'] },
-      { name: 'Modelo CA/A', video: '2025/08/Hydraulic-unit-CA_Video-Low-1.mp4', specs: ['Versión con sala de máquinas', 'Caudal de 55 a 380 l/min', 'Motores de 4,5 a 37 kW', 'Para alto rendimiento y trayectos prolongados'] },
-      { name: 'Modelo CM320 Mark 2', video: '2025/08/CM320.mp4', specs: ['Caudal de 18 a 150 l/min', 'Motores de 2 a 15 kW', 'Válvulas de hasta 45 bar', 'Residencial o de tráfico medio'] },
-      { name: 'Modelo CM Mark 2', video: '2025/08/CM.mp4', specs: ['Caudal de 30 a 210 l/min', 'Motores de 3 a 18,5 kW', 'Opción con válvula electrónica', 'Formato modular y versátil'] },
-      { name: 'Modelo CG', video: '2025/08/Hydraulic-unit-CG_Video-Low.mp4', specs: ['Para montacargas de alto rendimiento', 'Caudal de 300 a 650 l/min', 'Motores de 12 a 75 kW', 'Tanque de 530 a 830 l'] }
+      { name: 'Modelo CA', pdf: 'https://www.moris.it/wp-content/uploads/CA-6.pdf', video: '2025/08/Hydraulic-unit-CA_Video-Low.mp4', specs: ['Caudal de 55 a 380 l/min', 'Motores de 4,5 a 37 kW', 'Válvulas certificadas a 45 bar', 'Versión compacta con bomba manual integrada'] },
+      { name: 'Modelo CA/A', pdf: 'https://www.moris.it/wp-content/uploads/CA-A-2.pdf', video: '2025/08/Hydraulic-unit-CA_Video-Low-1.mp4', specs: ['Versión con sala de máquinas', 'Caudal de 55 a 380 l/min', 'Motores de 4,5 a 37 kW', 'Para alto rendimiento y trayectos prolongados'] },
+      { name: 'Modelo CM320 Mark 2', pdf: 'https://www.moris.it/wp-content/uploads/CM-320.pdf', video: '2025/08/CM320.mp4', specs: ['Caudal de 18 a 150 l/min', 'Motores de 2 a 15 kW', 'Válvulas de hasta 45 bar', 'Residencial o de tráfico medio'] },
+      { name: 'Modelo CM Mark 2', pdf: 'https://www.moris.it/wp-content/uploads/CM.pdf', video: '2025/08/CM.mp4', specs: ['Caudal de 30 a 210 l/min', 'Motores de 3 a 18,5 kW', 'Opción con válvula electrónica', 'Formato modular y versátil'] },
+      { name: 'Modelo CG', pdf: 'https://www.moris.it/wp-content/uploads/CG-4.pdf', video: '2025/08/Hydraulic-unit-CG_Video-Low.mp4', specs: ['Para montacargas de alto rendimiento', 'Caudal de 300 a 650 l/min', 'Motores de 12 a 75 kW', 'Tanque de 530 a 830 l'] }
     ],
     gallery: ['2025/08/Hydraulic-unit-CA_02-1024x576.jpg', '2025/08/Hydraulic-unit-CA-A_01-1024x576.jpg', '2025/08/Hydraulic-unit-CM320-MK2_01-1024x576.jpg']
   },
@@ -107,14 +107,14 @@ const PRODUCTS = [
       'Configuraciones para cada necesidad de carga'
     ],
     models: [
-      { name: 'Gama M73 · Tracción', video: '2025/08/Argani-lift-video-M73.mp4', specs: ['Capacidad de hasta 480 kg (1:1)', 'Carga estática de 2.200 a 3.200 kg', 'Reducciones de 1/75 a 2/37', 'Versiones M73, M73H, M73S, M73AL y M73B'] },
-      { name: 'Gama M83 · M85', video: '2025/08/Argani-lift-video-M83.mp4', specs: ['M83: carga estática de 3.200 kg', 'M83AL: eje largo, 3.000 kg', 'M83B: con freno auxiliar', 'M85: con soporte, 4.000 kg'] },
-      { name: 'Gama M93 · M95', video: '2025/08/Argani-lift-video-M93.mp4', specs: ['M93: carga estática de 5.000 kg', 'M93AL: eje largo, 3.600 kg', 'M93B: con freno auxiliar', 'M95: con soporte, 5.000 kg'] },
-      { name: 'MGV25S · Gearless', video: '2025/08/gearless-mgv25s.mp4', specs: ['Par motor de 250 Nm', 'Hasta 700 kg en 2:1', 'Poleas de 160 a 320 mm', 'Freno de doble circuito certificado'] },
-      { name: 'MGV25M · Gearless', video: '2025/08/gearless-mgv25m.mp4', specs: ['Par motor de 385 Nm', 'Hasta 1.000 kg en 2:1', 'Carga estática de hasta 3.400 kg', 'Con y sin cuarto de máquinas'] },
-      { name: 'MGV25ML · Gearless', video: '2025/08/gearless-mgv25ml-l.mp4', specs: ['Par motor de 530 Nm', 'Hasta 1.200 kg en 2:1', 'Para sistemas de hasta 15 pasajeros', 'Poleas especiales de hasta 600 mm'] },
-      { name: 'MGV34M · Gearless', video: '2025/08/gearless-mgv34m.mp4', specs: ['Par motor de 1.050 Nm', 'Hasta 2.000 kg a 3 m/s en 2:1', 'Carga estática de hasta 5.000 kg', 'Con y sin sala de máquinas'] },
-      { name: 'MDX26S · Gearless', specs: ['Par motor de 250 Nm', 'Hasta 630 kg en 2:1, 2 m/s', 'Carga estática de hasta 1.800 kg', 'Para ascensores y plataformas'] }
+      { name: 'Gama M73 · Tracción', pdf: 'https://www.montanarigiulio.com/pdf-catalog/pdf.php?dest=M73', video: '2025/08/Argani-lift-video-M73.mp4', specs: ['Capacidad de hasta 480 kg (1:1)', 'Carga estática de 2.200 a 3.200 kg', 'Reducciones de 1/75 a 2/37', 'Versiones M73, M73H, M73S, M73AL y M73B'] },
+      { name: 'Gama M83 · M85', pdf: 'https://www.montanarigiulio.com/prodotto/argani/argani-lift/m83-m85/', video: '2025/08/Argani-lift-video-M83.mp4', specs: ['M83: carga estática de 3.200 kg', 'M83AL: eje largo, 3.000 kg', 'M83B: con freno auxiliar', 'M85: con soporte, 4.000 kg'] },
+      { name: 'Gama M93 · M95', pdf: 'https://www.montanarigiulio.com/pdf-catalog/pdf.php?dest=M93-M95', video: '2025/08/Argani-lift-video-M93.mp4', specs: ['M93: carga estática de 5.000 kg', 'M93AL: eje largo, 3.600 kg', 'M93B: con freno auxiliar', 'M95: con soporte, 5.000 kg'] },
+      { name: 'MGV25S · Gearless', pdf: 'https://www.montanarigiulio.com/pdf-catalog/pdf.php?dest=MGV25S', video: '2025/08/gearless-mgv25s.mp4', specs: ['Par motor de 250 Nm', 'Hasta 700 kg en 2:1', 'Poleas de 160 a 320 mm', 'Freno de doble circuito certificado'] },
+      { name: 'MGV25M · Gearless', pdf: 'https://www.montanarigiulio.com/pdf-catalog/pdf.php?dest=MGV25M', video: '2025/08/gearless-mgv25m.mp4', specs: ['Par motor de 385 Nm', 'Hasta 1.000 kg en 2:1', 'Carga estática de hasta 3.400 kg', 'Con y sin cuarto de máquinas'] },
+      { name: 'MGV25ML · Gearless', pdf: 'https://www.montanarigiulio.com/pdf-catalog/pdf.php?dest=MGV25ML', video: '2025/08/gearless-mgv25ml-l.mp4', specs: ['Par motor de 530 Nm', 'Hasta 1.200 kg en 2:1', 'Para sistemas de hasta 15 pasajeros', 'Poleas especiales de hasta 600 mm'] },
+      { name: 'MGV34M · Gearless', pdf: 'https://www.montanarigiulio.com/pdf-catalog/pdf.php?dest=MGV34M', video: '2025/08/gearless-mgv34m.mp4', specs: ['Par motor de 1.050 Nm', 'Hasta 2.000 kg a 3 m/s en 2:1', 'Carga estática de hasta 5.000 kg', 'Con y sin sala de máquinas'] },
+      { name: 'MDX26S · Gearless', pdf: 'https://en.montanari.cn/wp-content/uploads/2018/05/Gearless-MDX26S.pdf', specs: ['Par motor de 250 Nm', 'Hasta 630 kg en 2:1, 2 m/s', 'Carga estática de hasta 1.800 kg', 'Para ascensores y plataformas'] }
     ],
     gallery: ['2025/08/MDX26M-LATO-2.jpg', '2025/08/MDX26ML-L-LATO-1.jpg', '2025/08/MDX26ML-L-LATO-2.jpg']
   },
@@ -134,9 +134,9 @@ const PRODUCTS = [
       'Normas EN81-20/50 y EN81-41'
     ],
     models: [
-      { name: 'Pistón 9130', video: '2025/08/Piston-9130_Video-Low.mp4', specs: ['Lateral indirecto 2:1', 'Carrera máxima: 11.000 mm', 'Diámetro: 50 a 238 mm', 'Máxima versatilidad y rentabilidad'] },
-      { name: 'Pistón 9140', video: '2025/08/Piston-9140_Video-Low.mp4', specs: ['Lateral directo 1:1', 'Carrera máxima: 11.000 mm', 'Diámetro: 50 a 150 mm', 'Ideal para viajes cortos'] },
-      { name: 'Pistón 9150', video: '2025/08/Piston-9150_Video-Low.mp4', specs: ['Central directo 1:1', 'Carrera máxima: 11.000 mm', 'Diámetro: 50 a 238 mm', 'Doméstico, estándar y montacargas'] }
+      { name: 'Pistón 9130', pdf: 'https://www.moris.it/wp-content/uploads/9130.pdf', video: '2025/08/Piston-9130_Video-Low.mp4', specs: ['Lateral indirecto 2:1', 'Carrera máxima: 11.000 mm', 'Diámetro: 50 a 238 mm', 'Máxima versatilidad y rentabilidad'] },
+      { name: 'Pistón 9140', pdf: 'https://www.moris.it/wp-content/uploads/9140.pdf', video: '2025/08/Piston-9140_Video-Low.mp4', specs: ['Lateral directo 1:1', 'Carrera máxima: 11.000 mm', 'Diámetro: 50 a 150 mm', 'Ideal para viajes cortos'] },
+      { name: 'Pistón 9150', pdf: 'https://www.moris.it/wp-content/uploads/9150.pdf', video: '2025/08/Piston-9150_Video-Low.mp4', specs: ['Central directo 1:1', 'Carrera máxima: 11.000 mm', 'Diámetro: 50 a 238 mm', 'Doméstico, estándar y montacargas'] }
     ],
     gallery: ['2025/08/Piston-9140_01-1024x576.jpg', '2025/08/Piston-9150_01-1024x576.jpg', '2025/08/Piston-9130_02-1024x576.jpg']
   },
@@ -418,6 +418,23 @@ const BRANDS = [
   { id: 'sjec', name: 'SJEC', logo: '2025/09/sjec.png' }
 ];
 
+/*
+  Google reviews carousel (home page). With an apiKey (Google Maps JavaScript API with "Places API (New)"
+  enabled, restricted to the site's domain) the reviews, rating and count load live from Google, keeping only
+  reviews rated >= minRating. Without a key the carousel shows the rating summary and marked sample cards.
+  rating / count below = values seen on Google Maps in October 2026, replaced by live data when the key is set.
+*/
+const GOOGLE_REVIEWS = {
+  apiKey: '',
+  minRating: 4,
+  places: [
+    { label: 'Casa matriz', query: 'H. Trimarchi, Abraham J. Luppi 1535, Ciudad de Buenos Aires', rating: 4.7, count: 357,
+      maps: 'https://www.google.com/maps/search/?api=1&query=H.+Trimarchi+Abraham+J.+Luppi+1535+CABA' },
+    { label: 'Sucursal', query: 'H. Trimarchi, Teniente General Eustaquio Frías 182, Ciudad de Buenos Aires', rating: 4.7, count: 236,
+      maps: 'https://www.google.com/maps/search/?api=1&query=H.+Trimarchi+Eustaquio+Fr%C3%ADas+182+CABA' }
+  ]
+};
+
 const productUrl = p => `producto.html?p=${p.slug}`;
 const productNumber = p => String(PRODUCTS.indexOf(p) + 1).padStart(2, '0');
 const brandById = id => BRANDS.find(b => b.id === id);
@@ -436,6 +453,21 @@ function productCardsHTML(list = PRODUCTS) {
         <span class="mx-auto mt-6 inline-flex items-center gap-2 border-b border-gold-500/50 pb-1 font-semibold text-navy-800 transition group-hover:gap-3 group-hover:border-navy-800">
           Ver detalle <i data-lucide="arrow-right" class="h-4 w-4" stroke-width="1.75"></i>
         </span>
+      </div>
+    </a>`).join('');
+}
+
+// Compact tiles (photo + name) for the home page's featured products
+function productTilesHTML(list) {
+  return list.map((p, i) => `
+    <a href="${productUrl(p)}" class="reveal group flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-ivory-200 transition duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-navy-900/10 hover:ring-gold-500/40" style="transition-delay:${(i % 6) * 60}ms">
+      <div class="aspect-square overflow-hidden bg-white">
+        <img src="${UP + p.img}" alt="${productLabel(p)}" loading="lazy" class="h-full w-full ${p.fit === 'contain' ? 'object-contain p-4' : 'object-cover'} transition duration-700 group-hover:scale-105">
+      </div>
+      <div class="flex flex-1 flex-col items-center border-t border-ivory-200 px-3 py-4 text-center">
+        <span class="font-serif text-sm italic text-gold-600">${productNumber(p)}</span>
+        <h3 class="mt-0.5 font-serif text-xl font-semibold leading-tight text-navy-900">${p.name}</h3>
+        <span class="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-navy-800 opacity-70 transition group-hover:gap-2 group-hover:opacity-100">Ver detalle <i data-lucide="arrow-right" class="h-3.5 w-3.5" stroke-width="1.75"></i></span>
       </div>
     </a>`).join('');
 }

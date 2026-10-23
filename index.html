@@ -158,8 +158,8 @@
           <h2 class="reveal mt-5 font-serif text-4xl font-semibold leading-tight text-navy-900 sm:text-6xl">Tenemos lo que busca</h2>
           <p class="reveal mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">Del repuesto puntual al kit completo para una instalación nueva, con el asesoramiento técnico que solo dan los años.</p>
         </div>
-        <div id="featured" class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
-        <div class="reveal mt-14 text-center">
+        <div id="featured" class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6"></div>
+        <div class="reveal mt-10 text-center">
           <a href="productos.html" class="inline-flex items-center gap-2 rounded-full border border-navy-700/25 px-8 py-4 font-semibold text-navy-800 transition hover:border-gold-500 hover:text-gold-700">Ver todos los productos <i data-lucide="arrow-right" class="h-5 w-5" stroke-width="1.75"></i></a>
         </div>
       </div>
@@ -179,6 +179,25 @@
       </div>
     </section>
 
+    <!-- Google reviews -->
+    <section id="reviews" class="border-t border-ivory-200 bg-ivory-100 py-20 sm:py-24">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="reveal rule eyebrow text-xs font-semibold uppercase text-gold-700 sm:text-sm">Opiniones en Google</p>
+          <h2 class="reveal mt-5 font-serif text-4xl font-semibold leading-tight text-navy-900 sm:text-5xl">Lo que dicen nuestros clientes</h2>
+        </div>
+        <div data-summary class="reveal mt-8 flex flex-wrap justify-center gap-3"></div>
+        <div class="reveal relative mt-12">
+          <div data-track class="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-2"></div>
+          <div class="mt-8 flex items-center justify-center gap-3">
+            <button type="button" data-prev class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-navy-700/20 bg-white text-navy-800 transition hover:border-gold-500 hover:text-gold-700" aria-label="Opinión anterior"><i data-lucide="arrow-left" class="h-5 w-5" stroke-width="1.5"></i></button>
+            <button type="button" data-next class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-navy-700/20 bg-white text-navy-800 transition hover:border-gold-500 hover:text-gold-700" aria-label="Opinión siguiente"><i data-lucide="arrow-right" class="h-5 w-5" stroke-width="1.5"></i></button>
+          </div>
+        </div>
+        <p class="reveal mt-6 text-center text-sm text-ink-muted">Opiniones publicadas por clientes en Google Maps.</p>
+      </div>
+    </section>
+
     <div data-cta></div>
   </main>
 
@@ -187,9 +206,10 @@
   <script src="assets/site.js"></script>
   <script>
     const featured = ['kits', 'cabinas', 'centrales', 'maquinas', 'puertas', 'guias'].map(s => PRODUCTS.find(p => p.slug === s));
-    document.getElementById('featured').innerHTML = productCardsHTML(featured);
+    document.getElementById('featured').innerHTML = productTilesHTML(featured);
     document.getElementById('brandStrip').innerHTML = brandStripHTML();
   </script>
+  <script src="assets/reviews.js"></script>
   <script src="assets/layout.js"></script>
 </body>
 </html>

@@ -9,6 +9,10 @@ html { font-size: 17px; }
 .rule::before, .rule::after { content: ''; width: 1.25rem; height: 1px; background: currentColor; opacity: .55; flex-shrink: 0; }
 @media (min-width: 640px) { .rule::before, .rule::after { width: 2.5rem; } }
 
+/* Horizontal carousels scroll without a visible scrollbar */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 /* Right-aligned label: keep only the leading rule on desktop */
 @media (min-width: 1024px) { .rule-start::after { display: none; } }
 
