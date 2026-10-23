@@ -14,7 +14,16 @@
 
 Para ver la versión de celular: en Chrome, `F12` y después `Ctrl + Shift + M`.
 
-## Páginas
+## Dos opciones de diseño
+
+| Opción | Dónde | Estilo | Funciones propias |
+| --- | --- | --- | --- |
+| **A · Clásica** | raíz (`index.html`) | Modo claro marfil, serif clásica (Cormorant Garamond), azul y dorado, composición simétrica | Productos destacados, fichas técnicas, carrusel de opiniones de Google |
+| **B · El edificio** | `opcion-b/` (`opcion-b/index.html`) | La web como un edificio: cada sección es un piso con indicador de piso, portada con puertas de ascensor que se abren; blanco y gris acero, azul y ámbar, títulos en Archivo y datos en IBM Plex Mono | Buscador de productos, modelos y marcas (`Ctrl K`), lista de cotización con varios productos, catálogo filtrable por rubro y marca, filtro en las tablas técnicas, consulta urgente "¿Equipo parado?", formulario con foto y perfil del cliente |
+
+Las dos usan el mismo catálogo (`assets/site.js`): un cambio de producto se ve en ambas.
+
+## Páginas (opción A)
 
 | Archivo | Página |
 | --- | --- |

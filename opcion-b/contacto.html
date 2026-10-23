@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto | H. Trimarchi S.R.L.</title>
+  <meta name="description" content="Pedí tu cotización o hacé una consulta urgente. Casa matriz en Abraham J. Luppi 1535 y sucursal en Tte. Gral. Eustaquio Frías 182, CABA.">
+  <link rel="icon" href="https://trimarchi.com.ar/wp-content/uploads/2025/08/cropped-HT-150x150.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/b-head.js"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/b.css">
+</head>
+<body data-page="contacto" class="bg-white font-sans text-ink-2 antialiased overflow-x-hidden">
+  <div id="site-header"></div>
+
+  <main>
+    <section id="pb" data-floor="PB" data-floor-name="Contacto" class="blueprint border-b border-steel-200 bg-steel-50">
+      <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div class="reveal" id="tag"></div>
+        <h1 class="reveal mt-4 font-display text-[2.5rem] font-extrabold leading-tight text-navy-900 sm:text-6xl">Contacto</h1>
+        <p class="reveal mt-3 max-w-2xl text-lg">Pedí una cotización, consultá por un repuesto o avisanos si tenés un equipo parado.</p>
+        <div class="reveal mt-8 grid gap-3 sm:grid-cols-3">
+          <a href="mailto:info@trimarchi.com.ar" class="flex items-center gap-4 rounded-2xl border border-steel-200 bg-white p-5 hover:border-navy-700/40"><span class="flex h-11 w-11 items-center justify-center rounded-xl bg-navy-900 text-amber-400"><i data-lucide="mail" class="h-5 w-5"></i></span><span><span class="block text-sm text-ink-3">Email</span><span class="font-semibold text-navy-900">info@trimarchi.com.ar</span></span></a>
+          <div id="waCard" class="flex items-center gap-4 rounded-2xl border border-dashed border-steel-300 bg-white p-5"><span class="flex h-11 w-11 items-center justify-center rounded-xl bg-steel-200 text-ink-3"><i data-lucide="message-circle" class="h-5 w-5"></i></span><span><span class="block text-sm text-ink-3">WhatsApp</span><span class="font-semibold text-ink-3">[Número a completar]</span></span></div>
+          <a href="https://www.instagram.com/htrimarchi.srl/" target="_blank" rel="noopener" class="flex items-center gap-4 rounded-2xl border border-steel-200 bg-white p-5 hover:border-navy-700/40"><span class="flex h-11 w-11 items-center justify-center rounded-xl bg-navy-900 text-amber-400"><i data-lucide="instagram" class="h-5 w-5"></i></span><span><span class="block text-sm text-ink-3">Instagram</span><span class="font-semibold text-navy-900">@htrimarchi.srl</span></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 · Form + quote list -->
+    <section id="formulario" data-floor="01" data-floor-name="Formulario" class="py-14 sm:py-16">
+      <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.45fr_1fr] lg:px-8">
+        <form id="contactForm" class="reveal rounded-2xl border border-steel-200 bg-white p-6 shadow-sm sm:p-8" novalidate>
+          <div id="tag1"></div>
+          <h2 class="mt-3 font-display text-3xl font-bold text-navy-900">Pedí tu cotización</h2>
+
+          <label id="urgentBox" class="mt-6 flex cursor-pointer items-center gap-4 rounded-xl border border-steel-200 p-4 transition">
+            <input id="urgent" name="urgente" type="checkbox" class="peer sr-only">
+            <span class="relative h-7 w-12 shrink-0 rounded-full bg-steel-300 transition after:absolute after:left-1 after:top-1 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition peer-checked:bg-amber-500 peer-checked:after:translate-x-5"></span>
+            <span><span class="block font-semibold text-navy-900">Es urgente: tengo un equipo parado</span><span class="text-sm text-ink-3">La consulta llega marcada como urgente.</span></span>
+          </label>
+
+          <div class="mt-6 grid gap-5 sm:grid-cols-2">
+            <label class="block"><span class="font-medium text-navy-900">Nombre *</span><input name="nombre" required autocomplete="name" class="mt-2 w-full rounded-xl border border-steel-300 px-4 py-3 text-lg outline-none focus:border-navy-700"></label>
+            <label class="block"><span class="font-medium text-navy-900">Empresa</span><input name="empresa" autocomplete="organization" class="mt-2 w-full rounded-xl border border-steel-300 px-4 py-3 text-lg outline-none focus:border-navy-700"></label>
+            <label class="block"><span class="font-medium text-navy-900">Email *</span><input name="email" type="email" required autocomplete="email" class="mt-2 w-full rounded-xl border border-steel-300 px-4 py-3 text-lg outline-none focus:border-navy-700"></label>
+            <label class="block"><span class="font-medium text-navy-900">Teléfono *</span><input name="telefono" type="tel" required autocomplete="tel" class="mt-2 w-full rounded-xl border border-steel-300 px-4 py-3 text-lg outline-none focus:border-navy-700"></label>
+            <label class="block"><span class="font-medium text-navy-900">Soy…</span>
+              <select name="perfil" class="mt-2 w-full rounded-xl border border-steel-300 bg-white px-4 py-3 text-lg outline-none focus:border-navy-700">
+                <option>Instalador</option><option>Conservador / mantenimiento</option><option>Administración o consorcio</option><option>Constructora</option><option>Otro</option>
+              </select></label>
+            <label class="block"><span class="font-medium text-navy-900">Producto</span>
+              <select id="producto" name="producto" class="mt-2 w-full rounded-xl border border-steel-300 bg-white px-4 py-3 text-lg outline-none focus:border-navy-700"><option value="Consulta general">Consulta general</option></select></label>
+            <label class="block sm:col-span-2"><span class="font-medium text-navy-900">Mensaje</span>
+              <textarea id="mensaje" name="mensaje" rows="5" placeholder="Marca y modelo del equipo, pieza, medidas, cantidad…" class="mt-2 w-full rounded-xl border border-steel-300 px-4 py-3 text-lg outline-none focus:border-navy-700"></textarea></label>
+            <label class="block sm:col-span-2"><span class="font-medium text-navy-900">Foto de la pieza o de la chapa del equipo</span>
+              <input name="foto" type="file" accept="image/*" class="mt-2 block w-full rounded-xl border border-dashed border-steel-300 p-3 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-navy-800 file:px-4 file:py-2 file:font-semibold file:text-white">
+              <span class="mt-1 block text-xs text-ink-3">Ayuda a identificar el repuesto. En la versión publicada la foto se adjunta a la consulta.</span></label>
+          </div>
+
+          <label id="listBox" class="mt-5 hidden items-center gap-3 rounded-xl bg-steel-50 p-4">
+            <input id="includeList" type="checkbox" checked class="h-5 w-5 accent-[#161f5c]">
+            <span class="text-navy-900">Incluir mi lista de cotización (<span data-list-count>0</span> ítems)</span>
+          </label>
+
+          <p id="formError" class="mt-4 hidden rounded-xl bg-amber-300/40 px-4 py-3 text-sm text-navy-950" role="alert"></p>
+          <div class="mt-6 flex flex-wrap items-center gap-4">
+            <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-navy-800 px-8 py-4 text-lg font-semibold text-white hover:bg-navy-950">Enviar consulta <i data-lucide="send" class="h-5 w-5"></i></button>
+            <p class="text-xs text-ink-3">Se abre tu programa de correo con la consulta lista. Usamos tus datos solo para responderte.</p>
+          </div>
+        </form>
+
+        <aside class="space-y-5 lg:sticky lg:top-28 lg:self-start">
+          <div class="reveal rounded-2xl border border-steel-200 bg-steel-50 p-6">
+            <div class="flex items-center justify-between"><p class="font-display text-xl font-bold text-navy-900">Tu lista de cotización</p><button type="button" data-quote-open class="text-sm font-semibold text-navy-800 underline">Editar</button></div>
+            <ul id="listPreview" class="mt-3 space-y-1.5 text-[0.95rem]"></ul>
+          </div>
+          <div class="reveal on-dark blueprint-dark rounded-2xl bg-navy-950 p-6 text-steel-200">
+            <p class="font-display text-xl font-bold text-white">Para responderte más rápido</p>
+            <ul class="mt-3 space-y-2">
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-amber-400"></i>Marca y modelo del equipo.</li>
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-amber-400"></i>Foto de la pieza o de la chapa identificatoria.</li>
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-amber-400"></i>Medidas y cantidad que necesitás.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 02 · Locations -->
+    <section id="sedes" data-floor="02" data-floor-name="Sedes" class="border-t border-steel-200 bg-steel-50 py-14 sm:py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal" id="tag2"></div>
+        <h2 class="reveal mt-3 font-display text-3xl font-bold text-navy-900 sm:text-4xl">Dos sedes en la Ciudad de Buenos Aires</h2>
+        <div class="mt-8 grid gap-5 lg:grid-cols-2">
+          <article class="reveal grid overflow-hidden rounded-2xl border border-steel-200 bg-white sm:grid-cols-2">
+            <iframe title="Mapa Casa matriz - Abraham J. Luppi 1535" src="https://www.google.com/maps?q=Abraham+J.+Luppi+1535,+C1437FRN+CABA,+Argentina&output=embed" class="h-60 w-full border-0 sm:h-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="flex flex-col p-6"><span class="w-fit rounded-md bg-navy-900 px-2 py-0.5 font-mono text-xs text-amber-400">CASA MATRIZ</span>
+              <p class="mt-3 font-display text-xl font-bold text-navy-900">Abraham J. Luppi 1535</p><p>C1437FRN · Villa Pompeya</p><p class="mt-1 text-sm text-ink-3">Depósitos, fábrica y oficinas</p><p class="text-sm text-ink-3">[Horario a confirmar]</p>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=Abraham+J.+Luppi+1535,+CABA,+Argentina" target="_blank" rel="noopener" class="mt-auto inline-flex items-center gap-2 pt-5 font-semibold text-navy-800">Cómo llegar <i data-lucide="navigation" class="h-4 w-4"></i></a></div>
+          </article>
+          <article class="reveal grid overflow-hidden rounded-2xl border border-steel-200 bg-white sm:grid-cols-2">
+            <iframe title="Mapa Sucursal - Tte. Gral. Eustaquio Frías 182" src="https://www.google.com/maps?q=Eustaquio+Fr%C3%ADas+182,+C1414DVD+CABA,+Argentina&output=embed" class="h-60 w-full border-0 sm:h-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="flex flex-col p-6"><span class="w-fit rounded-md bg-navy-900 px-2 py-0.5 font-mono text-xs text-amber-400">SUCURSAL</span>
+              <p class="mt-3 font-display text-xl font-bold text-navy-900">Tte. Gral. Eustaquio Frías 182</p><p>C1414DVD · Parque Centenario</p><p class="mt-1 text-sm text-ink-3">[Horario a confirmar]</p>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=Eustaquio+Fr%C3%ADas+182,+CABA,+Argentina" target="_blank" rel="noopener" class="mt-auto inline-flex items-center gap-2 pt-5 font-semibold text-navy-800">Cómo llegar <i data-lucide="navigation" class="h-4 w-4"></i></a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../assets/site.js"></script>
+  <script src="assets/b-core.js"></script>
+  <script>
+    document.getElementById('tag').innerHTML = floorTag('PB', 'Planta baja · Contacto');
+    document.getElementById('tag1').innerHTML = floorTag('01', 'Formulario');
+    document.getElementById('tag2').innerHTML = floorTag('02', 'Sedes');
+
+    const params = new URLSearchParams(location.search);
+    const form = document.getElementById('contactForm');
+    const select = document.getElementById('producto');
+    select.insertAdjacentHTML('beforeend', PRODUCTS.map(p => `<option value="${esc(p.name)}">${esc(p.name)}</option>`).join(''));
+    const wanted = params.get('producto');
+    if (wanted && PRODUCTS.some(p => p.name === wanted)) select.value = wanted;
+    else if (wanted) document.getElementById('mensaje').value = `Consulta sobre ${wanted}: `;
+
+    // Urgent toggle highlights the box
+    const urgent = document.getElementById('urgent');
+    const urgentBox = document.getElementById('urgentBox');
+    const paintUrgent = () => urgentBox.className = `mt-6 flex cursor-pointer items-center gap-4 rounded-xl border p-4 transition ${urgent.checked ? 'border-amber-500 bg-amber-300/30' : 'border-steel-200'}`;
+    urgent.checked = params.get('urgente') === '1';
+    urgent.addEventListener('change', paintUrgent);
+    paintUrgent();
+
+    // Quote list preview
+    const renderList = () => {
+      const items = Quote.items();
+      document.getElementById('listPreview').innerHTML = items.length
+        ? items.map(i => `<li class="flex gap-2"><span class="font-mono text-ink-3">${i.qty}×</span><span class="text-navy-900">${esc(Quote.label(i))}</span></li>`).join('')
+        : `<li class="text-ink-3">Vacía. Sumá productos desde el <a href="catalogo.html" class="font-semibold text-navy-800 underline">catálogo</a>.</li>`;
+      const box = document.getElementById('listBox');
+      box.classList.toggle('hidden', !items.length);
+      box.classList.toggle('flex', !!items.length);
+      box.querySelector('[data-list-count]').textContent = Quote.count();
+    };
+    document.addEventListener('quote:change', renderList);
+    renderList();
+
+    // Validate, then open the visitor's mail app with the request ready
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const f = new FormData(form);
+      const missing = ['nombre', 'email', 'telefono'].filter(k => !String(f.get(k) || '').trim());
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(f.get('email') || ''));
+      const error = document.getElementById('formError');
+      if (missing.length || !emailOk) {
+        error.textContent = missing.length ? 'Completá nombre, email y teléfono.' : 'Revisá el email: no parece válido.';
+        error.classList.remove('hidden');
+        return;
+      }
+      error.classList.add('hidden');
+      const photo = f.get('foto');
+      const list = document.getElementById('includeList').checked && Quote.items().length ? `\n\nLista de cotización:\n${Quote.text()}` : '';
+      const body = `${urgent.checked ? 'URGENTE: equipo parado\n\n' : ''}Nombre: ${f.get('nombre')}\nEmpresa: ${f.get('empresa')}\nEmail: ${f.get('email')}\nTeléfono: ${f.get('telefono')}\nPerfil: ${f.get('perfil')}\nProducto: ${f.get('producto')}\n\n${f.get('mensaje')}${list}${photo && photo.name ? `\n\n(Foto seleccionada: ${photo.name}. Adjuntala a este correo.)` : ''}`;
+      const subject = `${urgent.checked ? '[URGENTE] ' : ''}Cotización - ${f.get('producto')}`;
+      location.href = `mailto:${B_CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
+  <script src="assets/b-layout.js"></script>
+</body>
+</html>

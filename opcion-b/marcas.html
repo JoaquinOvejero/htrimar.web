@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marcas | H. Trimarchi S.R.L.</title>
+  <meta name="description" content="Representantes oficiales de Fermator, Moris, Montanari Giulio, Monteferro, IPH y otras marcas líderes de la industria del ascensor.">
+  <link rel="icon" href="https://trimarchi.com.ar/wp-content/uploads/2025/08/cropped-HT-150x150.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/b-head.js"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/b.css">
+</head>
+<body data-page="marcas" class="bg-white font-sans text-ink-2 antialiased overflow-x-hidden">
+  <div id="site-header"></div>
+
+  <main>
+    <section id="pb" data-floor="PB" data-floor-name="Marcas" class="blueprint border-b border-steel-200 bg-steel-50">
+      <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div class="reveal" id="tag"></div>
+        <h1 class="reveal mt-4 max-w-4xl font-display text-[2.1rem] font-extrabold leading-[1.04] text-navy-900 sm:text-6xl">Representantes <span class="text-amber-600">oficiales</span> de los principales fabricantes</h1>
+        <p class="reveal mt-5 max-w-2xl text-lg">Somos distribuidores exclusivos de las mejores firmas nacionales e internacionales, con el respaldo y la garantía de cada fabricante.</p>
+      </div>
+    </section>
+
+    <!-- 01 · Lobby directory board -->
+    <section id="directorio" data-floor="01" data-floor-name="Directorio de marcas" class="py-14 sm:py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal on-dark blueprint-dark overflow-hidden rounded-2xl bg-navy-950 text-white shadow-xl">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-6 py-4 font-mono text-xs uppercase tracking-widest">
+            <span class="text-amber-400">Directorio · Marcas representadas</span><span id="brandCount" class="text-steel-400"></span>
+          </div>
+          <ul id="board" class="divide-y divide-white/10"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 · Why official -->
+    <section id="garantia" data-floor="02" data-floor-name="Representación oficial" class="border-t border-steel-200 bg-steel-50 py-14 sm:py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal" id="tag2"></div>
+        <h2 class="reveal mt-3 font-display text-3xl font-bold text-navy-900 sm:text-4xl">Comprar a un representante oficial</h2>
+        <div class="mt-8 grid gap-6 md:grid-cols-3">
+          <div class="reveal border-t-2 border-amber-500 pt-5"><h3 class="font-display text-xl font-bold text-navy-900">Garantía de origen</h3><p class="mt-2">Productos originales, con la garantía de calidad de cada fabricante.</p></div>
+          <div class="reveal border-t-2 border-amber-500 pt-5"><h3 class="font-display text-xl font-bold text-navy-900">Fichas técnicas</h3><p class="mt-2">Información de cada modelo para elegir con precisión.</p></div>
+          <div class="reveal border-t-2 border-amber-500 pt-5"><h3 class="font-display text-xl font-bold text-navy-900">Respaldo técnico</h3><p class="mt-2">Asesoramiento de un equipo con más de 40 años en el rubro.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../assets/site.js"></script>
+  <script src="assets/b-core.js"></script>
+  <script>
+    document.getElementById('tag').innerHTML = floorTag('PB', 'Planta baja · Marcas');
+    document.getElementById('tag2').innerHTML = floorTag('02', 'Representación oficial');
+    document.getElementById('brandCount').textContent = `${BRANDS.length} marcas`;
+
+    document.getElementById('board').innerHTML = BRANDS.map((b, i) => {
+      const lines = PRODUCTS.filter(p => p.brand === b.id);
+      return `
+        <li id="${b.id}" class="grid items-center gap-4 px-6 py-5 md:grid-cols-[3rem_12rem_1fr_auto] md:gap-6">
+          <span class="font-mono text-sm text-steel-400">${String(i + 1).padStart(2, '0')}</span>
+          <span class="flex h-14 items-center justify-center overflow-hidden rounded-lg bg-white px-3 md:w-48">
+            ${b.logo ? `<img src="${UP + b.logo}" alt="${b.name}" loading="lazy" class="h-auto w-full max-w-[150px] scale-150 object-contain">` : `<span class="font-display text-lg font-bold text-navy-900">${b.name}</span>`}
+          </span>
+          <span>
+            <span class="block font-mono text-lg uppercase tracking-wider text-amber-400">${b.name}</span>
+            <span class="block text-steel-300">${b.desc || '[Descripción y línea de productos a confirmar]'}</span>
+          </span>
+          <span class="flex flex-wrap gap-2 md:justify-end">
+            ${lines.length
+              ? lines.map(p => `<a href="${productUrl(p)}" class="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white hover:border-amber-400 hover:text-amber-400">${p.name} <i data-lucide="arrow-right" class="h-4 w-4"></i></a>`).join('')
+              : `<a href="contacto.html?producto=${encodeURIComponent(b.name)}#formulario" class="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white hover:border-amber-400 hover:text-amber-400">Consultar <i data-lucide="arrow-right" class="h-4 w-4"></i></a>`}
+          </span>
+        </li>`;
+    }).join('');
+  </script>
+  <script src="assets/b-layout.js"></script>
+</body>
+</html>

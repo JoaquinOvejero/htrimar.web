@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Producto | H. Trimarchi S.R.L.</title>
+  <meta name="description" content="Productos para ascensores de H. Trimarchi S.R.L.">
+  <link rel="icon" href="https://trimarchi.com.ar/wp-content/uploads/2025/08/cropped-HT-150x150.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script src="assets/b-head.js"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/b.css">
+</head>
+<body data-page="catalogo" class="bg-white font-sans text-ink-2 antialiased overflow-x-hidden">
+  <div id="site-header"></div>
+  <main id="detail"></main>
+  <div id="site-footer"></div>
+
+  <script src="../assets/site.js"></script>
+  <script src="assets/b-core.js"></script>
+  <script>
+    const slug = new URLSearchParams(location.search).get('p');
+    const p = PRODUCTS.find(x => x.slug === slug) || PRODUCTS[0];
+    const idx = PRODUCTS.indexOf(p);
+    const prev = PRODUCTS[(idx - 1 + PRODUCTS.length) % PRODUCTS.length];
+    const next = PRODUCTS[(idx + 1) % PRODUCTS.length];
+    const brand = p.brand && brandById(p.brand);
+    const cat = categoryOf(p);
+    document.title = `${productLabel(p)} | H. Trimarchi S.R.L.`;
+    document.querySelector('meta[name="description"]').content = p.short;
+
+    const images = [...new Set([p.img, ...p.gallery])];
+    const fitClass = img => (p.fit === 'contain' || (p.galleryFit !== 'cover' && img !== p.img) ? 'object-contain p-6' : 'object-cover');
+    const wa = whatsappUrl(`Hola, quiero consultar por ${p.name}.`);
+    let floor = 0;
+    const nextFloor = () => String(++floor).padStart(2, '0');
+
+    /* Hero: gallery left, data right */
+    const hero = `
+      <section id="pb" data-floor="PB" data-floor-name="${esc(p.name)}" class="blueprint border-b border-steel-200 bg-steel-50">
+        <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+          <a href="catalogo.html${cat ? `?rubro=${cat.id}` : ''}" class="inline-flex items-center gap-2 font-mono text-sm text-ink-3 hover:text-navy-900"><i data-lucide="arrow-left" class="h-4 w-4"></i> Catálogo${cat ? ` · ${cat.name}` : ''}</a>
+          <div class="mt-6 grid gap-10 lg:grid-cols-2 lg:gap-14">
+            <div class="min-w-0">
+              <div class="relative aspect-square overflow-hidden rounded-2xl border border-steel-200 bg-white">
+                <img id="mainImg" src="${UP + images[0]}" alt="${esc(productLabel(p))}" class="h-full w-full ${fitClass(images[0])}">
+              </div>
+              ${images.length > 1 ? `<div class="no-scrollbar mt-3 flex gap-3 overflow-x-auto">
+                ${images.map((img, i) => `<button type="button" data-img="${UP + img}" data-fit="${fitClass(img)}" class="thumb h-20 w-20 shrink-0 overflow-hidden rounded-xl border-2 bg-white ${i === 0 ? 'border-navy-800' : 'border-steel-200'}" aria-label="Ver imagen ${i + 1}">
+                  <img src="${UP + img}" alt="" loading="lazy" class="h-full w-full ${fitClass(img).replace('p-6', 'p-1.5')}"></button>`).join('')}
+              </div>` : ''}
+            </div>
+            <div class="min-w-0">
+              <p class="font-mono text-xs uppercase tracking-wider text-ink-3">${productNumber(p)}${cat ? ` · ${cat.name}` : ''}</p>
+              <h1 class="mt-2 font-display text-[2.4rem] font-extrabold leading-[1.05] text-navy-900 sm:text-5xl">${esc(p.name)}</h1>
+              ${brand ? `<p class="mt-3 inline-flex items-center gap-2 rounded-full bg-navy-900 px-3 py-1 font-mono text-xs uppercase tracking-wider text-amber-400"><i data-lucide="badge-check" class="h-3.5 w-3.5"></i> Línea oficial ${esc(brand.name)}</p>` : ''}
+              <p class="mt-5 text-xl leading-snug text-navy-900">${esc(p.short)}</p>
+              ${p.intro.map(t => `<p class="mt-4 leading-relaxed">${esc(t)}</p>`).join('')}
+              <ul class="mt-6 grid gap-2 sm:grid-cols-2">
+                ${p.features.map(f => `<li class="flex gap-2.5 text-[0.95rem]"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-amber-600" stroke-width="2"></i><span>${esc(f)}</span></li>`).join('')}
+              </ul>
+              <div class="mt-8 flex flex-wrap gap-3">
+                ${addButton(p.slug, '', 'Agregar a la cotización', 'px-6 py-3.5 text-base')}
+                ${wa ? `<a href="${wa}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-steel-300 bg-white px-6 py-3.5 font-semibold text-navy-900 hover:border-navy-700"><i data-lucide="message-circle" class="h-5 w-5"></i> WhatsApp</a>`
+                    : `<span class="inline-flex items-center gap-2 rounded-full border border-dashed border-steel-300 px-6 py-3.5 text-ink-3"><i data-lucide="message-circle" class="h-5 w-5"></i> WhatsApp [número a completar]</span>`}
+              </div>
+              ${p.models ? `<a href="#modelos" class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-navy-800"><i data-lucide="arrow-down" class="h-4 w-4"></i> Ver los ${p.models.length} modelos</a>` : ''}
+            </div>
+          </div>
+        </div>
+      </section>`;
+
+    /* Models: rows with 360° space, specs, datasheet and "add" per model */
+    let models = '';
+    if (p.models) {
+      const withSpecs = p.models.some(m => m.specs);
+      const f = nextFloor();
+      models = `
+        <section id="modelos" data-floor="${f}" data-floor-name="${esc(p.modelsEyebrow || 'Modelos')}" class="py-14 sm:py-16">
+          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            ${floorTag(f, p.modelsEyebrow || 'Modelos')}
+            <h2 class="mt-3 font-display text-3xl font-bold text-navy-900 sm:text-4xl">${esc(p.modelsTitle || (withSpecs ? 'Elegí el modelo' : 'Opciones disponibles'))}</h2>
+            ${withSpecs ? `
+              <div class="mt-8 divide-y divide-steel-200 overflow-hidden rounded-2xl border border-steel-200">
+                ${p.models.map(m => `
+                  <article class="grid gap-5 bg-white p-5 sm:p-6 md:grid-cols-[${p.view360 ? '11rem_' : ''}1fr_auto] md:items-center">
+                    ${p.view360 ? `<div class="flex aspect-video flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-amber-500/60 bg-steel-50 text-center" data-video="${m.video ? UP + m.video : ''}">
+                      <i data-lucide="rotate-3d" class="h-6 w-6 text-amber-600" stroke-width="1.5"></i><span class="font-mono text-[0.65rem] uppercase tracking-widest text-amber-700">Vista 360°</span><span class="px-2 text-[0.65rem] text-ink-3">Espacio para el video</span></div>` : ''}
+                    <div>
+                      <h3 class="font-display text-xl font-bold text-navy-900 tabular">${esc(m.name)}</h3>
+                      <ul class="mt-2 grid gap-x-6 gap-y-1 text-[0.95rem] sm:grid-cols-2">${m.specs.map(s => `<li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500"></span>${esc(s)}</li>`).join('')}</ul>
+                    </div>
+                    <div class="flex flex-wrap gap-2 md:flex-col md:items-stretch">
+                      ${addButton(p.slug, m.name, 'Cotizar')}
+                      ${m.pdf ? `<a href="${esc(m.pdf)}" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-full border border-steel-300 px-5 py-2.5 text-sm font-semibold text-navy-800 hover:border-navy-700"><i data-lucide="file-text" class="h-4 w-4"></i> Ficha técnica</a>` : ''}
+                    </div>
+                  </article>`).join('')}
+              </div>` : `
+              <ul class="mt-8 flex flex-wrap gap-3">
+                ${p.models.map(m => `<li class="inline-flex items-center gap-2 rounded-full border border-steel-200 bg-white py-1.5 pl-5 pr-1.5 text-navy-900">${esc(m.name)}
+                  <button type="button" data-quote-add data-slug="${p.slug}" data-model="${esc(m.name)}" class="call-btn h-8 w-8 bg-navy-800 text-white hover:bg-navy-950" aria-label="Agregar ${esc(m.name)} a la cotización"><i data-lucide="plus" class="h-4 w-4"></i></button></li>`).join('')}
+              </ul>`}
+          </div>
+        </section>`;
+    }
+
+    /* Technical tables with a row filter */
+    let tables = '';
+    if (p.tables) {
+      const f = nextFloor();
+      const compact = p.tables.every(t => t.columns.length <= 3 && t.rows.every(r => r.join('').length < 24));
+      tables = `
+        <section id="datos" data-floor="${f}" data-floor-name="Datos técnicos" class="border-t border-steel-200 bg-steel-50 py-14 sm:py-16">
+          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            ${floorTag(f, 'Datos técnicos')}
+            <h2 class="mt-3 font-display text-3xl font-bold text-navy-900 sm:text-4xl">Tablas de especificaciones</h2>
+            <div class="mt-8 ${compact ? `grid items-start gap-5 lg:grid-cols-${p.tables.length}` : 'space-y-8'}">
+              ${p.tables.map((t, ti) => `
+                <figure class="overflow-hidden rounded-2xl border border-steel-200 bg-white">
+                  <figcaption class="flex flex-wrap items-center justify-between gap-3 border-b border-steel-200 px-5 py-4">
+                    <span><span class="block font-display text-xl font-bold text-navy-900 tabular">${esc(t.title)}</span>${t.caption ? `<span class="block text-sm text-ink-3">${esc(t.caption)}</span>` : ''}</span>
+                    ${t.rows.length > 4 ? `<label class="flex items-center gap-2 rounded-full border border-steel-300 px-3"><i data-lucide="filter" class="h-4 w-4 text-ink-3"></i><input data-table-filter="${ti}" type="search" placeholder="Filtrar" class="h-9 w-28 bg-transparent text-sm outline-none" aria-label="Filtrar ${esc(t.title)}"></label>` : ''}
+                  </figcaption>
+                  <div class="overflow-x-auto">
+                    <table data-table="${ti}" class="w-full ${t.columns.length > 4 ? 'min-w-[720px]' : ''} text-center text-[0.92rem] tabular">
+                      <thead class="bg-navy-900 text-white"><tr>${t.columns.map(([l, u], ci) => `<th scope="col" class="px-3 py-3 align-bottom text-xs font-semibold leading-snug ${ci === 0 ? 'sticky left-0 bg-navy-900' : ''}">${esc(l)}${u ? `<span class="mt-0.5 block font-mono text-[0.7rem] font-normal text-amber-400">${esc(u)}</span>` : ''}</th>`).join('')}</tr></thead>
+                      <tbody class="font-mono">${t.rows.map(r => `<tr class="border-t border-steel-200 bg-white even:bg-steel-50">${r.map((c, ci) => `<td class="whitespace-nowrap px-3 py-2.5 ${ci === 0 ? 'sticky left-0 bg-inherit font-semibold text-navy-900' : 'text-ink-2'}">${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+                    </table>
+                  </div>
+                  ${t.note ? `<p class="border-t border-steel-200 px-5 py-3 text-sm text-ink-3">${esc(t.note)}</p>` : ''}
+                </figure>`).join('')}
+            </div>
+            ${p.tablesNote ? `<p class="mt-5 text-sm text-ink-3">${esc(p.tablesNote)}</p>` : ''}
+          </div>
+        </section>`;
+    }
+
+    /* Previous / next + urgent band */
+    const f = nextFloor();
+    const navCard = (q, dir) => `
+      <a href="${productUrl(q)}" class="group flex items-center gap-4 rounded-2xl border border-steel-200 bg-white p-4 hover:border-navy-700/40 ${dir === 'next' ? 'flex-row-reverse text-right' : ''}">
+        <img src="${UP + q.img}" alt="" loading="lazy" class="h-16 w-16 shrink-0 rounded-xl border border-steel-200 ${q.fit === 'contain' ? 'object-contain p-1' : 'object-cover'}">
+        <span class="flex-1"><span class="block font-mono text-xs uppercase tracking-wider text-ink-3">${dir === 'next' ? 'Siguiente' : 'Anterior'} · ${productNumber(q)}</span><span class="block font-display text-lg font-bold text-navy-900">${esc(q.name)}</span></span>
+        <i data-lucide="${dir === 'next' ? 'arrow-right' : 'arrow-left'}" class="h-5 w-5 text-ink-3 group-hover:text-navy-900"></i>
+      </a>`;
+    const more = `
+      <section id="mas" data-floor="${f}" data-floor-name="Más productos" class="border-t border-steel-200 py-12">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          ${floorTag(f, 'Más productos')}
+          <div class="mt-6 grid gap-4 md:grid-cols-2">${navCard(prev, 'prev')}${navCard(next, 'next')}</div>
+          <div class="mt-8 flex flex-col items-start justify-between gap-4 rounded-2xl bg-amber-400 p-6 text-navy-950 sm:flex-row sm:items-center sm:p-8">
+            <p class="font-display text-2xl font-bold">¿Equipo parado? Te respondemos con prioridad.</p>
+            <a href="contacto.html?urgente=1&producto=${encodeURIComponent(p.name)}#formulario" class="inline-flex shrink-0 items-center gap-2 rounded-full bg-navy-950 px-6 py-3.5 font-semibold text-white">Consulta urgente <i data-lucide="arrow-right" class="h-5 w-5"></i></a>
+          </div>
+        </div>
+      </section>`;
+
+    document.getElementById('detail').innerHTML = hero + models + tables + more;
+
+    // Gallery thumbnails swap the main image
+    const mainImg = document.getElementById('mainImg');
+    document.querySelectorAll('.thumb').forEach(t => t.addEventListener('click', () => {
+      mainImg.src = t.dataset.img;
+      mainImg.className = `h-full w-full ${t.dataset.fit}`;
+      document.querySelectorAll('.thumb').forEach(o => o.classList.replace('border-navy-800', 'border-steel-200'));
+      t.classList.replace('border-steel-200', 'border-navy-800');
+    }));
+
+    // Table filters
+    document.querySelectorAll('[data-table-filter]').forEach(input => input.addEventListener('input', () => {
+      const term = norm(input.value).trim();
+      document.querySelectorAll(`[data-table="${input.dataset.tableFilter}"] tbody tr`).forEach(tr => {
+        tr.classList.toggle('hidden', !!term && !norm(tr.textContent).includes(term));
+      });
+    }));
+  </script>
+  <script src="assets/b-layout.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+/* Option B — "el edificio": technical, architectural, amber like an elevator panel light */
+html { font-size: 17px; scroll-padding-top: 6rem; }
+@media (min-width: 1024px) { html { font-size: 18px; } }
+
+/* Archivo set slightly wide: signage feel */
+.font-display { font-stretch: 112%; letter-spacing: -0.01em; }
+/* Long Spanish words in wide headings never push the page sideways on phones */
+h1, h2, h3 { hyphens: auto; overflow-wrap: break-word; }
+.tabular { font-variant-numeric: tabular-nums lining-nums; }
+
+/* Blueprint grid used on light panels */
+.blueprint { background-image: linear-gradient(rgba(35, 44, 101, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(35, 44, 101, .05) 1px, transparent 1px); background-size: 32px 32px; }
+.blueprint-dark { background-image: linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px); background-size: 32px 32px; }
+
+/* Floor label: "PISO 02 — Catálogo" */
+.floor-tag { display: inline-flex; align-items: center; gap: .75rem; font-family: 'IBM Plex Mono', monospace; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #8f6200; }
+.floor-tag b { display: inline-flex; min-width: 2.4rem; justify-content: center; padding: .15rem .45rem; border: 1px solid currentColor; border-radius: .35rem; font-weight: 500; }
+.on-dark .floor-tag { color: #ffc23d; }
+
+/* Elevator-style round button */
+.call-btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .25); }
+
+/* Hero elevator doors */
+.doors { position: absolute; inset: 0; display: flex; pointer-events: none; z-index: 2; }
+.doors span { flex: 1; background: linear-gradient(90deg, #cfd5de, #eef0f4 45%, #cfd5de); box-shadow: inset -1px 0 0 rgba(16, 23, 74, .25); transition: transform 1.5s cubic-bezier(.7, 0, .2, 1); }
+.doors span + span { box-shadow: inset 1px 0 0 rgba(16, 23, 74, .25); }
+.doors.is-open span:first-child { transform: translateX(-101%); }
+.doors.is-open span:last-child { transform: translateX(101%); }
+
+/* Floor indicator light */
+.floor-dot { width: .55rem; height: .55rem; border-radius: 9999px; background: #cfd5de; transition: background .3s, box-shadow .3s; }
+[aria-current="true"] .floor-dot { background: #f2a900; box-shadow: 0 0 0 4px rgba(242, 169, 0, .2); }
+
+/* Horizontal carousels without a visible scrollbar */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Reveal on scroll (only while JS runs) */
+.js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease; }
+.js .reveal.is-visible { opacity: 1; transform: none; }
+
+dialog::backdrop { background: rgba(10, 15, 44, .55); backdrop-filter: blur(2px); }
+
+/* Quote drawer */
+.drawer { transform: translateX(100%); visibility: hidden; transition: transform .35s ease, visibility 0s linear .35s; }
+.drawer.is-open { transform: none; visibility: visible; transition: transform .35s ease, visibility 0s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  .doors { display: none; }
+  * { transition: none !important; }
+}
