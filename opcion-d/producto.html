@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Producto | H. Trimarchi S.R.L.</title>
+  <meta name="description" content="Productos para ascensores de H. Trimarchi S.R.L.">
+  <link rel="icon" href="https://trimarchi.com.ar/wp-content/uploads/2025/08/cropped-HT-150x150.png">
+  <meta name="theme-color" content="#fdfcf9">
+  <link rel="preload" href="assets/fonts/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/d.min.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body data-page="productos" class="bg-ivory-50 font-sans text-ink antialiased overflow-x-hidden">
+  <div id="site-header"></div>
+  <main id="detail"></main>
+  <div id="site-footer"></div>
+
+  <script src="assets/d-icons.js"></script>
+  <script src="../assets/site.js"></script>
+  <script src="assets/d-core.js"></script>
+  <script>
+    const slug = new URLSearchParams(location.search).get('p');
+    const p = PRODUCTS.find(x => x.slug === slug) || PRODUCTS[0];
+    const idx = PRODUCTS.indexOf(p);
+    const prev = PRODUCTS[(idx - 1 + PRODUCTS.length) % PRODUCTS.length];
+    const next = PRODUCTS[(idx + 1) % PRODUCTS.length];
+    const brand = p.brand && brandById(p.brand);
+    const cat = categoryOf(p);
+    document.title = `${productLabel(p)} | H. Trimarchi S.R.L.`;
+    document.querySelector('meta[name="description"]').content = p.short;
+
+    const images = [...new Set([p.img, ...p.gallery])];
+    const fitClass = img => (p.fit === 'contain' || (p.galleryFit !== 'cover' && img !== p.img) ? 'object-contain p-6' : 'object-cover');
+    const wa = whatsappUrl(`Hola, quiero consultar por ${p.name}.`);
+    // A still frame of each 360° video, kept in the site so the box is never empty while the clip loads
+    const posterOf = video => 'assets/posters/' + video.split('/').pop().replace(/\.mp4$/, '.jpg');
+
+    /* Hero: on a phone the title comes first, then the gallery, then the details; on desktop gallery left, text right */
+    const hero = `
+      <section>
+        <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+          <div class="grid gap-8 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-0">
+            <div class="min-w-0 lg:col-start-2 lg:row-start-1" data-stagger>
+              <h1 class="reveal font-serif text-[2.5rem] font-semibold leading-[1.04] text-navy-900 sm:text-[3.2rem] lg:text-[3.4rem]">${esc(p.name)}</h1>
+              <p class="reveal mt-2 font-serif text-xl italic text-gold-700">${brand ? `Representación oficial de ${esc(brand.name)}` : esc(cat ? cat.name : '')}</p>
+              <p class="reveal mt-5 text-xl leading-snug text-navy-900">${esc(p.short)}</p>
+            </div>
+            <div class="min-w-0 lg:col-start-1 lg:row-span-2 lg:row-start-1">
+              <div class="aspect-[4/3] overflow-hidden rounded-[2rem] bg-white sm:aspect-square">
+                <img id="mainImg" src="${UP + images[0]}" alt="${esc(productLabel(p))}" fetchpriority="high" class="h-full w-full ${fitClass(images[0])}">
+              </div>
+              ${images.length > 1 ? `<div class="mt-4 grid ${({ 4: 'grid-cols-4', 5: 'grid-cols-5', 7: 'grid-cols-4', 8: 'grid-cols-4' })[images.length] || 'grid-cols-3'} gap-3 p-1">
+                ${images.map((img, i) => `<button type="button" data-img="${UP + img}" data-fit="${fitClass(img)}" class="thumb aspect-square overflow-hidden rounded-2xl bg-white outline-offset-2 ${i === 0 ? 'outline outline-2 outline-gold-500' : ''}" aria-label="Ver imagen ${i + 1}" aria-pressed="${i === 0}">
+                  <img src="${UP + img}" alt="" loading="lazy" decoding="async" class="h-full w-full ${fitClass(img).replace('p-6', 'p-3')}"></button>`).join('')}
+              </div>` : ''}
+            </div>
+            <div class="min-w-0 lg:col-start-2 lg:row-start-2">
+              ${p.intro.map(t => `<p class="mt-4 leading-relaxed text-ink-soft first:mt-0 lg:first:mt-4">${esc(t)}</p>`).join('')}
+              <ul class="mt-6 grid gap-2.5 sm:grid-cols-2">
+                ${p.features.map(f => `<li class="flex gap-2.5 text-navy-900"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-gold-600" stroke-width="2"></i><span>${esc(f)}</span></li>`).join('')}
+              </ul>
+              <div class="mt-8 flex flex-wrap gap-3">
+                ${addButton(p.slug, '', 'Agregar a la cotización', 'px-7 py-4 text-base')}
+                <a href="contacto.html?producto=${encodeURIComponent(p.name)}&urgente=1#formulario" class="inline-flex items-center gap-2 rounded-full bg-gold-400 px-7 py-4 font-semibold text-navy-950 transition hover:bg-gold-300"><i data-lucide="siren" class="h-5 w-5" stroke-width="1.5"></i> ¿Equipo parado?</a>
+                ${wa ? `<a href="${wa}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full bg-ivory-100 px-7 py-4 font-semibold text-navy-900 transition hover:bg-ivory-200"><i data-lucide="message-circle" class="h-5 w-5" stroke-width="1.5"></i> WhatsApp</a>` : ''}
+              </div>
+              ${p.models ? `<a href="#modelos" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-navy-800 underline decoration-gold-500/60 decoration-2 underline-offset-8 hover:text-gold-700"><i data-lucide="arrow-down" class="h-4 w-4"></i> Ver los ${p.models.length} modelos</a>` : ''}
+            </div>
+          </div>
+        </div>
+      </section>
+      ${p.banner && p.banner !== p.img ? `<div class="mx-auto max-w-5xl px-4 pb-14 sm:px-6 lg:px-8"><img src="${UP + p.banner}" alt="${esc(p.name)}: fotografía de la línea" loading="lazy" decoding="async" class="aspect-[1024/233] w-full rounded-[2rem] object-cover"></div>` : ''}`;
+
+    /* Models: specs, the real 360° video, datasheet and "quote" per model */
+    let models = '';
+    if (p.models) {
+      const withSpecs = p.models.some(m => m.specs);
+      models = `
+        <section id="modelos" class="scroll-mt-24 bg-ivory-100 py-16 sm:py-20">
+          <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            ${sectionHead(p.modelsTitle || (withSpecs ? 'Elija el modelo' : 'Opciones disponibles'), p.view360 ? 'Toque la vista 360° de cada modelo para verlo girar.' : '')}
+            ${withSpecs ? `
+              <div class="mt-12 space-y-4" data-stagger>
+                ${p.models.map(m => `
+                  <article class="reveal grid gap-5 rounded-[1.5rem] bg-white p-5 sm:p-6 ${p.view360 ? 'md:grid-cols-[13rem_1fr_auto]' : 'md:grid-cols-[1fr_auto]'} md:items-center">
+                    ${p.view360 && m.video ? `
+                      <div class="relative aspect-video overflow-hidden rounded-2xl bg-white">
+                        <video class="h-full w-full object-contain" muted loop playsinline preload="none" poster="${posterOf(m.video)}" aria-label="${esc(m.name)} girando 360 grados"><source src="${UP + m.video}" type="video/mp4"></video>
+                        <button type="button" data-play class="absolute inset-0 flex items-end justify-start p-2" aria-pressed="false" aria-label="Reproducir la vista 360° de ${esc(m.name)}">
+                          <span class="inline-flex items-center rounded-full bg-navy-900 px-3 py-1.5 text-sm font-semibold text-white"><span data-play-label>Vista 360°</span></span>
+                        </button>
+                      </div>` : p.view360 ? '<div></div>' : ''}
+                    <div>
+                      <h3 class="tabular font-serif text-3xl font-semibold text-navy-900">${esc(m.name)}</h3>
+                      <ul class="mt-2 grid gap-x-6 gap-y-1 text-ink-soft sm:grid-cols-2">${m.specs.map(s => `<li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-gold-500"></span>${esc(s)}</li>`).join('')}</ul>
+                    </div>
+                    <div class="flex flex-wrap gap-2 md:flex-col md:items-stretch">
+                      ${addButton(p.slug, m.name, 'Cotizar', '', false)}
+                      ${m.pdf ? `<a href="${esc(m.pdf)}" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-full bg-ivory-100 px-5 py-2.5 text-sm font-semibold text-navy-800 transition hover:bg-ivory-200">Ficha técnica (PDF)</a>` : ''}
+                    </div>
+                  </article>`).join('')}
+              </div>` : `
+              <ul class="mt-10 flex flex-wrap justify-center gap-3" data-stagger>
+                ${p.models.map(m => `<li class="reveal inline-flex items-center gap-2 rounded-full bg-white py-1.5 pl-5 pr-1.5 text-navy-900">${esc(m.name)}
+                  <button type="button" data-quote-add data-slug="${p.slug}" data-model="${esc(m.name)}" class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-navy-700 text-white hover:bg-navy-900" aria-label="Agregar ${esc(m.name)} a la cotización"><i data-lucide="plus" class="h-4 w-4"></i></button></li>`).join('')}
+              </ul>`}
+          </div>
+        </section>`;
+    }
+
+    /* Technical tables: tabular figures in the text face, rows told apart by tone */
+    let tables = '';
+    if (p.tables) {
+      const compact = p.tables.every(t => t.columns.length <= 3 && t.rows.every(r => r.join('').length < 24));
+      tables = `
+        <section class="bg-white py-16 sm:py-20">
+          <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            ${sectionHead('Tablas de especificaciones', 'Datos de referencia del fabricante, para comparar diámetros, secciones y cargas.')}
+            <div class="mt-12 ${compact ? `grid items-start gap-6 ${['', 'lg:grid-cols-1', 'lg:grid-cols-2', 'lg:grid-cols-3', 'lg:grid-cols-4'][p.tables.length] || 'lg:grid-cols-3'}` : 'space-y-8'}">
+              ${p.tables.map((t, ti) => `
+                <figure class="reveal overflow-hidden rounded-[1.75rem] bg-ivory-50 ${!compact && t.columns.length <= 4 ? 'mx-auto w-full max-w-4xl' : ''}">
+                  <figcaption class="flex flex-wrap items-center justify-between gap-3 px-6 pb-4 pt-6">
+                    <span><span class="tabular block font-serif text-2xl font-semibold text-navy-900">${esc(t.title)}</span>${t.caption ? `<span class="block text-sm text-ink-muted">${esc(t.caption)}</span>` : ''}</span>
+                    ${t.rows.length > 4 ? `<label class="flex items-center gap-2 rounded-full bg-white px-3 focus-within:ring-2 focus-within:ring-gold-500"><i data-lucide="filter" class="h-4 w-4 text-gold-700" stroke-width="1.5"></i><input data-table-filter="${ti}" type="search" placeholder="Filtrar" class="h-10 w-28 bg-transparent text-sm outline-none" aria-label="Filtrar ${esc(t.title)}"></label>` : ''}
+                  </figcaption>
+                  <div class="overflow-x-auto" tabindex="0" role="region" aria-label="${esc(t.title)}">
+                    <table data-table="${ti}" class="tabular w-full ${t.columns.length > 4 ? 'min-w-[720px]' : ''} text-center text-sm">
+                      <thead class="bg-ivory-200"><tr>${t.columns.map(([l, u], ci) => `<th scope="col" class="px-3 py-3.5 align-bottom font-semibold leading-snug text-navy-900 ${ci === 0 ? 'sticky left-0 bg-ivory-200' : ''}">${esc(l)}${u ? `<span class="mt-1 block font-medium text-gold-700">${esc(u)}</span>` : ''}</th>`).join('')}</tr></thead>
+                      <tbody>${t.rows.map(r => `<tr class="bg-white even:bg-ivory-50">${r.map((c, ci) => `<td class="whitespace-nowrap px-3 py-2.5 ${ci === 0 ? 'sticky left-0 bg-inherit font-semibold text-navy-900' : 'text-ink-soft'}">${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+                    </table>
+                  </div>
+                  ${t.note ? `<p class="px-6 py-4 text-center text-sm text-ink-muted">${esc(t.note)}</p>` : ''}
+                </figure>`).join('')}
+            </div>
+            ${p.tablesNote ? `<p class="mt-6 text-center text-sm text-ink-muted">${esc(p.tablesNote)}</p>` : ''}
+          </div>
+        </section>`;
+    }
+
+    /* Previous / next */
+    const navCard = (q, dir) => `
+      <a href="${productUrl(q)}" class="reveal group flex items-center gap-4 rounded-[1.5rem] bg-white p-4 transition hover:bg-ivory-50 ${dir === 'next' ? 'flex-row-reverse text-right' : ''}">
+        <img src="${UP + q.img}" alt="" loading="lazy" class="h-16 w-16 shrink-0 rounded-xl bg-white ${q.fit === 'contain' ? 'object-contain p-1' : 'object-cover'}">
+        <span class="flex-1"><span class="block text-sm text-ink-muted">${dir === 'next' ? 'Siguiente línea' : 'Línea anterior'}</span><span class="mt-1 block font-serif text-2xl font-semibold text-navy-900">${esc(q.name)}</span></span>
+        <i data-lucide="${dir === 'next' ? 'arrow-right' : 'arrow-left'}" class="h-5 w-5 text-gold-600" stroke-width="1.5"></i>
+      </a>`;
+    const more = `
+      <section class="bg-ivory-100 py-12" aria-label="Otras líneas">
+        <div class="mx-auto grid max-w-5xl gap-4 px-4 sm:px-6 md:grid-cols-2">${navCard(prev, 'prev')}${navCard(next, 'next')}</div>
+      </section>
+      <div data-cta></div>`;
+
+    document.getElementById('detail').innerHTML = hero + models + tables + more;
+
+    const mainImg = document.getElementById('mainImg');
+    document.querySelectorAll('.thumb').forEach(t => t.addEventListener('click', () => {
+      mainImg.src = t.dataset.img;
+      mainImg.className = `h-full w-full ${t.dataset.fit}`;
+      document.querySelectorAll('.thumb').forEach(o => { o.classList.remove('outline', 'outline-2', 'outline-gold-500'); o.setAttribute('aria-pressed', 'false'); });
+      t.classList.add('outline', 'outline-2', 'outline-gold-500');
+      t.setAttribute('aria-pressed', 'true');
+    }));
+
+    // 360° videos: play and pause in place; only one plays at a time
+    document.querySelectorAll('[data-play]').forEach(btn => btn.addEventListener('click', () => {
+      const video = btn.parentElement.querySelector('video');
+      const playing = !video.paused;
+      document.querySelectorAll('[data-play]').forEach(o => { const v = o.parentElement.querySelector('video'); if (v !== video) { v.pause(); o.setAttribute('aria-pressed', 'false'); o.querySelector('[data-play-label]').textContent = 'Vista 360°'; } });
+      if (playing) video.pause(); else video.play().catch(() => {});
+      btn.setAttribute('aria-pressed', String(!playing));
+      btn.querySelector('[data-play-label]').textContent = playing ? 'Vista 360°' : 'Pausar';
+    }));
+
+    document.querySelectorAll('[data-table-filter]').forEach(input => input.addEventListener('input', () => {
+      const term = norm(input.value).trim();
+      document.querySelectorAll(`[data-table="${input.dataset.tableFilter}"] tbody tr`).forEach(tr => tr.classList.toggle('hidden', !!term && !norm(tr.textContent).includes(term)));
+    }));
+  </script>
+  <script src="assets/d-layout.js"></script>
+</body>
+</html>

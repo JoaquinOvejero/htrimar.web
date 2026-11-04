@@ -1,0 +1,9 @@
+# Working files of the design tools (screenshots, inspections, rolls)
+.taste-skill/
+.impeccable/review/
+.impeccable/questions/
+.impeccable/config.local.json
+.impeccable/hook.cache.json
+
+# Upload package built by herramientas/armar_paquete.py
+dist/
