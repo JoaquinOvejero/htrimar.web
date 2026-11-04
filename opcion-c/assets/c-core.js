@@ -91,16 +91,16 @@ const addButton = (slug, model = '', label = 'Agregar a la cotización', extra =
     <i data-lucide="plus" class="h-4 w-4" stroke-width="2"></i> ${label}
   </button>`;
 
-// Catalogue card: image left, text right
+// Catalogue card: image left, text right (text alone, full width, on phones)
 function productRowHTML(p) {
   const brand = p.brand && brandById(p.brand);
   const cat = categoryOf(p);
   return `
-    <article class="reveal group grid grid-cols-[7rem_1fr] overflow-hidden rounded-[1.5rem] bg-white ring-1 ring-ivory-200 transition duration-500 hover:shadow-xl hover:shadow-navy-900/10 hover:ring-gold-500/40 sm:grid-cols-[10rem_1fr]" data-product="${p.slug}" data-category="${cat ? cat.id : ''}" data-brand="${p.brand || ''}">
-      <a href="${productUrl(p)}" class="block overflow-hidden border-r border-ivory-200 bg-white" aria-label="${esc(p.name)}">
+    <article class="reveal group grid overflow-hidden rounded-[1.5rem] bg-white ring-1 ring-ivory-200 transition duration-500 hover:shadow-xl hover:shadow-navy-900/10 hover:ring-gold-500/40 sm:grid-cols-[10rem_1fr]" data-product="${p.slug}" data-category="${cat ? cat.id : ''}" data-brand="${p.brand || ''}">
+      <a href="${productUrl(p)}" class="hidden overflow-hidden border-r border-ivory-200 bg-white sm:block" aria-label="${esc(p.name)}">
         <img src="${UP + p.img}" alt="${esc(productLabel(p))}" loading="lazy" class="h-full w-full ${p.fit === 'contain' ? 'object-contain p-3' : 'object-cover'} transition duration-700 group-hover:scale-105">
       </a>
-      <div class="flex flex-col p-4 sm:p-5">
+      <div class="flex flex-col p-5">
         <p class="font-mono text-[0.7rem] uppercase tracking-wider text-ink-muted"><span class="font-serif text-sm normal-case italic tracking-normal text-gold-600">${productNumber(p)}</span> · ${cat ? cat.name : ''}${brand ? ` · ${esc(brand.name)}` : ''}</p>
         <h3 class="mt-1 font-serif text-2xl font-semibold leading-tight text-navy-900"><a href="${productUrl(p)}" class="hover:text-gold-700">${esc(p.name)}</a></h3>
         <p class="mt-1.5 flex-1 text-[0.95rem] leading-snug text-ink-soft">${esc(p.short)}</p>

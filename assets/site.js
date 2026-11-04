@@ -419,21 +419,139 @@ const BRANDS = [
 ];
 
 /*
-  Google reviews carousel (home page). With an apiKey (Google Maps JavaScript API with "Places API (New)"
-  enabled, restricted to the site's domain) the reviews, rating and count load live from Google, keeping only
-  reviews rated >= minRating. Without a key the carousel shows the rating summary and marked sample cards.
-  rating / count below = values seen on Google Maps in October 2026, replaced by live data when the key is set.
+  Google reviews carousel (home page). Set apiKey (Google Cloud key with "Maps JavaScript API" and "Places API (New)"
+  enabled, restricted to the site's domain) and the reviews, rating and count load live from Google when the visitor
+  nears the section, keeping only reviews rated >= minRating. Without a key the section shows the rating summary
+  and marked sample cards (design preview only).
+  placeId (optional): when empty, the place is found from `query` with Google's free ID-only search and its id is
+  printed in the browser console; pasting it here skips that step. Google's terms allow storing only the place id,
+  so the reviews themselves are never saved or copied by hand.
+  rating / count below = values seen on Google Maps in October 2026, replaced by live data once the key works.
 */
 const GOOGLE_REVIEWS = {
   apiKey: '',
   minRating: 4,
   places: [
-    { label: 'Casa matriz', query: 'H. Trimarchi, Abraham J. Luppi 1535, Ciudad de Buenos Aires', rating: 4.7, count: 357,
+    { label: 'Casa matriz', placeId: '', query: 'H. Trimarchi, Abraham J. Luppi 1535, Ciudad de Buenos Aires', rating: 4.7, count: 357,
       maps: 'https://www.google.com/maps/search/?api=1&query=H.+Trimarchi+Abraham+J.+Luppi+1535+CABA' },
-    { label: 'Sucursal', query: 'H. Trimarchi, Teniente General Eustaquio Frías 182, Ciudad de Buenos Aires', rating: 4.7, count: 236,
+    { label: 'Sucursal', placeId: '', query: 'H. Trimarchi, Teniente General Eustaquio Frías 182, Ciudad de Buenos Aires', rating: 4.7, count: 236,
       maps: 'https://www.google.com/maps/search/?api=1&query=H.+Trimarchi+Eustaquio+Fr%C3%ADas+182+CABA' }
   ]
 };
+
+// Live reviews, fetched once per page: a list newest first, or null without a key or when Google fails.
+// Also refreshes each place's rating, count and Maps link.
+let googleReviewsRequest = null;
+function loadGoogleReviews() {
+  const cfg = GOOGLE_REVIEWS;
+  if (!cfg.apiKey) return Promise.resolve(null);
+  if (googleReviewsRequest) return googleReviewsRequest;
+
+  const loadMaps = () => (window.google && google.maps && google.maps.importLibrary
+    ? Promise.resolve()
+    : new Promise((resolve, reject) => {
+        window.__trimarchiMapsReady = resolve;
+        const s = document.createElement('script');
+        s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(cfg.apiKey)}&v=weekly&language=es&region=AR&loading=async&callback=__trimarchiMapsReady`;
+        s.async = true;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      }));
+
+  const placeReviews = async (Place, pl) => {
+    let id = pl.placeId;
+    if (!id) {
+      const { places } = await Place.searchByText({ textQuery: pl.query, fields: ['id'], maxResultCount: 1 });
+      id = places && places[0] && places[0].id;
+      if (!id) return [];
+      console.info(`Reseñas de Google · ${pl.label}: placeId '${id}' (puede copiarlo en GOOGLE_REVIEWS, assets/site.js)`);
+    }
+    const place = new Place({ id, requestedLanguage: 'es' });
+    await place.fetchFields({ fields: ['rating', 'userRatingCount', 'googleMapsURI', 'reviews'] });
+    if (place.rating) pl.rating = place.rating;
+    if (place.userRatingCount) pl.count = place.userRatingCount;
+    if (place.googleMapsURI) pl.maps = place.googleMapsURI;
+    return (place.reviews || [])
+      .filter(r => (r.rating || 0) >= cfg.minRating && r.text)
+      .map(r => {
+        const author = r.authorAttribution || {};
+        return {
+          rating: r.rating, text: r.text, when: r.relativePublishTimeDescription || '', place: pl.label,
+          date: r.publishTime ? +new Date(r.publishTime) : 0,
+          name: author.displayName || 'Usuario de Google', photo: author.photoURI || '', profile: author.uri || '',
+          link: r.googleMapsURI || pl.maps
+        };
+      });
+  };
+
+  const live = async () => {
+    await loadMaps();
+    const { Place } = await google.maps.importLibrary('places');
+    const results = await Promise.allSettled(cfg.places.map(pl => placeReviews(Place, pl)));
+    results.filter(r => r.status === 'rejected').forEach(r => console.warn('No se pudieron cargar las reseñas de Google:', r.reason));
+    if (!results.some(r => r.status === 'fulfilled')) return null;
+    return results.flatMap(r => (r.status === 'fulfilled' ? r.value : [])).sort((a, b) => b.date - a.date);
+  };
+  // A rejected key or domain can leave Google's calls hanging: give up after 15 s and keep the summary
+  const timeout = new Promise(resolve => setTimeout(() => resolve(null), 15000));
+  googleReviewsRequest = Promise.race([live(), timeout]).catch(err => {
+    console.warn('No se pudieron cargar las reseñas de Google:', err);
+    return null;
+  });
+  return googleReviewsRequest;
+}
+
+// Runs fn once when el comes within about a screen of the viewport (each live load is a billed request)
+function whenNear(el, fn) {
+  if (!('IntersectionObserver' in window)) { fn(); return; }
+  const io = new IntersectionObserver(entries => {
+    if (!entries.some(e => e.isIntersecting)) return;
+    io.disconnect();
+    fn();
+  }, { rootMargin: '900px 0px' });
+  io.observe(el);
+}
+
+// The credit Google requires next to Places data shown without a map: "Google Maps", unaltered and untranslated,
+// Roboto (or a sans-serif) at weight 400, 12–16 px, #5E5E5E
+const googleMapsAttributionHTML = (cls = '') =>
+  `<p class="${cls}" translate="no" style="font:400 13px/1.4 Roboto,Arial,sans-serif;letter-spacing:normal;color:#5E5E5E">Google Maps</p>`;
+
+/*
+  Wires a home-page reviews section. The rating per location shows at once. With a key, the carousel stays hidden
+  until Google answers and then fills with the live reviews; if Google fails, the summary (with its links to Maps)
+  remains. Without a key it shows the sample cards. views = { summary(place), card(review), sample(i) }: each
+  option's markup. carousel = the element(s) hidden while loading; the Google Maps credit goes after the last one.
+*/
+function mountGoogleReviews({ section, summary, track, carousel, views, gap = 24, attributionClass = 'mt-6 text-center' }) {
+  const cfg = GOOGLE_REVIEWS;
+  const parts = [].concat(carousel);
+  const renderSummary = () => { summary.innerHTML = cfg.places.map(views.summary).join(''); };
+  const step = dir => {
+    const w = (track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width : 300) + gap;
+    if (dir > 0 && track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) track.scrollTo({ left: 0, behavior: 'smooth' });
+    else track.scrollBy({ left: dir * w, behavior: 'smooth' });
+  };
+  section.querySelector('[data-prev]').addEventListener('click', () => step(-1));
+  section.querySelector('[data-next]').addEventListener('click', () => step(1));
+  renderSummary();
+  if (!cfg.apiKey) {
+    track.innerHTML = [0, 1, 2].map(views.sample).join('');
+    return { step };
+  }
+  parts.forEach(el => { el.style.display = 'none'; });
+  whenNear(section, async () => {
+    const reviews = await loadGoogleReviews();
+    if (!reviews) return;
+    renderSummary();
+    parts[parts.length - 1].insertAdjacentHTML('afterend', googleMapsAttributionHTML(attributionClass));
+    if (!reviews.length) return;
+    track.innerHTML = reviews.map(views.card).join('');
+    track.scrollLeft = 0;
+    parts.forEach(el => { el.style.display = ''; });
+  });
+  return { step };
+}
 
 const productUrl = p => `producto.html?p=${p.slug}`;
 const productNumber = p => String(PRODUCTS.indexOf(p) + 1).padStart(2, '0');
@@ -443,10 +561,10 @@ const productLabel = p => p.seo || `${p.name} para ascensores`;
 function productCardsHTML(list = PRODUCTS) {
   return list.map((p, i) => `
     <a href="${productUrl(p)}" class="reveal group flex flex-col overflow-hidden rounded-[1.75rem] bg-white ring-1 ring-ivory-200 transition duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-navy-900/10 hover:ring-gold-500/40" style="transition-delay:${(i % 3) * 90}ms">
-      <div class="relative aspect-[4/3] overflow-hidden bg-white">
+      <div class="relative hidden aspect-[4/3] overflow-hidden bg-white sm:block">
         <img src="${UP + p.img}" alt="${productLabel(p)}" loading="lazy" class="h-full w-full ${p.fit === 'contain' ? 'object-contain p-6' : 'object-cover'} transition duration-700 group-hover:scale-105">
       </div>
-      <div class="flex flex-1 flex-col border-t border-ivory-200 p-7 text-center">
+      <div class="flex flex-1 flex-col border-ivory-200 p-7 text-center sm:border-t">
         <span class="font-serif text-lg italic text-gold-600">${productNumber(p)}</span>
         <h3 class="mt-1 font-serif text-3xl font-semibold text-navy-900">${p.name}</h3>
         <p class="mt-3 flex-1 leading-relaxed text-ink-soft">${p.short}</p>

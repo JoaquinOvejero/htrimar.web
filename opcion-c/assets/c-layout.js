@@ -59,9 +59,9 @@
           <i data-lucide="clipboard-list" class="h-9 w-9 text-gold-300" stroke-width="1.5"></i>
           <h2 class="mt-4 font-serif text-4xl font-semibold">¿Armando una obra?</h2>
           <p class="mt-2 flex-1 text-lg text-slate-300">Sume productos y modelos a su lista desde el catálogo y pida una sola cotización por todo.</p>
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a href="productos.html" class="inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 font-semibold text-navy-900 hover:bg-ivory-100">Armar mi lista</a>
-            <button type="button" data-quote-open class="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-4 font-semibold text-white hover:border-gold-300">Ver mi lista <span data-quote-count class="hidden h-5 min-w-5 items-center justify-center rounded-full bg-gold-400 px-1 font-mono text-[0.7rem] text-navy-950">0</span></button>
+          <div class="mt-6 grid gap-3 sm:flex sm:flex-wrap">
+            <a href="productos.html" class="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 font-semibold text-navy-900 hover:bg-ivory-100">Armar mi lista</a>
+            <button type="button" data-quote-open class="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-7 py-4 font-semibold text-white hover:border-gold-300">Ver mi lista <span data-quote-count class="hidden h-5 min-w-5 items-center justify-center rounded-full bg-gold-400 px-1 font-mono text-[0.7rem] text-navy-950">0</span></button>
           </div>
         </div>
       </div>

@@ -25,7 +25,7 @@
       <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:py-16">
         <div>
           <div class="reveal" id="heroTag"></div>
-          <h1 class="reveal mt-5 font-display text-[2.5rem] font-extrabold leading-[1.02] text-navy-900 sm:text-6xl lg:text-[3.3rem] xl:text-[4rem]">
+          <h1 class="reveal mt-5 font-display text-[2.1rem] font-extrabold leading-[1.04] text-navy-900 sm:text-6xl lg:text-[3.3rem] xl:text-[4rem]">
             Repuestos y componentes para ascensores. <span class="text-amber-600">En stock, desde 1981.</span>
           </h1>
           <p class="reveal mt-6 max-w-xl text-lg leading-relaxed text-ink-2">
@@ -132,7 +132,7 @@
           <div class="reveal" id="reviewsTag"></div>
           <h2 class="reveal mt-3 font-display text-4xl font-bold leading-tight text-navy-900">Lo que dicen en Google</h2>
           <div id="reviewSummary" class="reveal mt-6 space-y-3"></div>
-          <div class="reveal mt-6 flex gap-2">
+          <div id="reviewNav" class="reveal mt-6 flex gap-2">
             <button type="button" data-prev class="call-btn h-12 w-12 bg-navy-800 text-white hover:bg-navy-950" aria-label="Opinión anterior"><i data-lucide="chevron-left" class="h-5 w-5"></i></button>
             <button type="button" data-next class="call-btn h-12 w-12 bg-navy-800 text-white hover:bg-navy-950" aria-label="Opinión siguiente"><i data-lucide="chevron-right" class="h-5 w-5"></i></button>
           </div>
@@ -172,9 +172,9 @@
           <i data-lucide="clipboard-list" class="h-9 w-9 text-amber-400" stroke-width="1.5"></i>
           <h2 class="mt-4 font-display text-3xl font-bold">¿Armando una obra?</h2>
           <p class="mt-2 flex-1 text-lg text-steel-300">Sumá productos y modelos a tu lista desde el catálogo y pedí una sola cotización por todo.</p>
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a href="catalogo.html" class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 font-semibold text-navy-900 hover:bg-steel-100">Armar mi lista</a>
-            <button type="button" data-quote-open class="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 font-semibold text-white hover:border-white">Ver mi lista <span data-quote-count class="hidden h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 font-mono text-[0.7rem] text-navy-950">0</span></button>
+          <div class="mt-6 grid gap-3 sm:flex sm:flex-wrap">
+            <a href="catalogo.html" class="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 font-semibold text-navy-900 hover:bg-steel-100">Armar mi lista</a>
+            <button type="button" data-quote-open class="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-6 py-3.5 font-semibold text-white hover:border-white">Ver mi lista <span data-quote-count class="hidden h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 font-mono text-[0.7rem] text-navy-950">0</span></button>
           </div>
         </div>
       </div>
@@ -215,57 +215,40 @@
     // Elevator doors open once the page is on screen
     addEventListener('load', () => setTimeout(() => document.getElementById('doors').classList.add('is-open'), 350));
 
-    // Google reviews: rating per location + carousel (live through Places API when GOOGLE_REVIEWS.apiKey is set)
+    // Google reviews: rating per location, then the live carousel once the visitor nears it (GOOGLE_REVIEWS in ../assets/site.js)
     (() => {
-      const cfg = GOOGLE_REVIEWS;
-      const track = document.getElementById('reviewTrack');
-      const summary = document.getElementById('reviewSummary');
       const dec = n => n.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      const clip = t => (t.length > 240 ? `${t.slice(0, t.lastIndexOf(' ', 240))}…` : t);
       const cardCls = 'flex w-[85%] shrink-0 snap-start flex-col rounded-2xl border border-steel-200 bg-white p-6 sm:w-[calc(50%-0.625rem)]';
-      const renderSummary = () => {
-        summary.innerHTML = cfg.places.map(pl => `
-          <a href="${esc(pl.maps)}" target="_blank" rel="noopener" class="flex items-center gap-4 rounded-xl border border-steel-200 bg-white px-4 py-3 hover:border-navy-700/40">
-            <span class="font-mono text-3xl font-medium text-navy-900 tabular">${dec(pl.rating)}</span>
-            <span><span class="block text-sm">${starsHTML(pl.rating)}</span><span class="block text-sm text-ink-3">${pl.count.toLocaleString('es-AR')} opiniones · ${esc(pl.label)}</span></span>
-          </a>`).join('');
-      };
-      const sample = i => `<article class="${cardCls}">${starsHTML(5)}<p class="mt-4 flex-1 text-lg leading-snug text-ink-3">[Opinión de un cliente: se carga automáticamente desde Google]</p>
-        <p class="mt-5 border-t border-steel-200 pt-4 text-sm text-ink-3">[Nombre del cliente] · Google</p></article>`;
-      const card = r => `<article class="${cardCls}">${starsHTML(r.rating)}<p class="mt-4 flex-1 text-lg leading-snug text-navy-900">“${esc(r.text.length > 240 ? r.text.slice(0, r.text.lastIndexOf(' ', 240)) + '…' : r.text)}”</p>
-        <p class="mt-5 border-t border-steel-200 pt-4 text-sm"><span class="font-semibold text-navy-900">${esc(r.name)}</span> <span class="text-ink-3">· ${esc(r.when)} · ${esc(r.place)} · Google</span></p></article>`;
-      const step = dir => {
-        const w = (track.firstElementChild?.getBoundingClientRect().width || 300) + 20;
-        if (dir > 0 && track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) track.scrollTo({ left: 0, behavior: 'smooth' });
-        else track.scrollBy({ left: dir * w, behavior: 'smooth' });
-      };
-      document.querySelector('#opiniones [data-prev]').addEventListener('click', () => step(-1));
-      document.querySelector('#opiniones [data-next]').addEventListener('click', () => step(1));
-      renderSummary();
-      track.innerHTML = [0, 1, 2].map(sample).join('');
-      if (!cfg.apiKey) return;
-      window.__bMapsReady = async () => {
-        try {
-          const { Place } = await google.maps.importLibrary('places');
-          const reviews = [];
-          for (const pl of cfg.places) {
-            const { places } = await Place.searchByText({ textQuery: pl.query, fields: ['rating', 'userRatingCount', 'reviews', 'googleMapsURI'], maxResultCount: 1 });
-            const place = places && places[0];
-            if (!place) continue;
-            if (place.rating) pl.rating = place.rating;
-            if (place.userRatingCount) pl.count = place.userRatingCount;
-            if (place.googleMapsURI) pl.maps = place.googleMapsURI;
-            (place.reviews || []).filter(r => (r.rating || 0) >= cfg.minRating && r.text).forEach(r => reviews.push({
-              rating: r.rating, text: r.text, when: r.relativePublishTimeDescription || '', place: pl.label,
-              name: (r.authorAttribution && r.authorAttribution.displayName) || 'Cliente de Google' }));
-          }
-          renderSummary();
-          if (reviews.length) track.innerHTML = reviews.map(card).join('');
-        } catch (err) { console.warn('No se pudieron cargar las reseñas de Google:', err); }
-      };
-      const s = document.createElement('script');
-      s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(cfg.apiKey)}&v=weekly&language=es&loading=async&callback=__bMapsReady`;
-      s.async = true;
-      document.head.appendChild(s);
+      // Google asks for each author's photo, name and profile, and a link to the review on Maps
+      const author = r => `
+        <div class="mt-5 flex items-center gap-3 border-t border-steel-200 pt-4">
+          ${r.photo
+            ? `<img src="${esc(r.photo)}" alt="" referrerpolicy="no-referrer" loading="lazy" decoding="async" class="h-10 w-10 shrink-0 rounded-full object-cover">`
+            : `<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy-900 font-display font-bold text-amber-400" aria-hidden="true">${esc(r.name.charAt(0))}</span>`}
+          <p class="min-w-0 text-sm leading-snug">
+            ${r.profile ? `<a href="${esc(r.profile)}" target="_blank" rel="noopener" class="block truncate font-semibold text-navy-900 hover:underline">${esc(r.name)}</a>` : `<span class="block truncate font-semibold text-navy-900">${esc(r.name)}</span>`}
+            <span class="text-ink-3"><a href="${esc(r.link)}" target="_blank" rel="noopener" class="underline decoration-steel-300 underline-offset-2 hover:text-navy-900">${esc(r.when || 'Ver en Google')}</a> · ${esc(r.place)}</span>
+          </p>
+        </div>`;
+      mountGoogleReviews({
+        section: document.getElementById('opiniones'),
+        summary: document.getElementById('reviewSummary'),
+        track: document.getElementById('reviewTrack'),
+        carousel: [document.getElementById('reviewTrack'), document.getElementById('reviewNav')],
+        gap: 20,
+        attributionClass: 'mt-4',
+        views: {
+          summary: pl => `
+            <a href="${esc(pl.maps)}" target="_blank" rel="noopener" class="flex items-center gap-4 rounded-xl border border-steel-200 bg-white px-4 py-3 hover:border-navy-700/40">
+              <span class="font-mono text-3xl font-medium text-navy-900 tabular">${dec(pl.rating)}</span>
+              <span><span class="block text-sm">${starsHTML(pl.rating)}</span><span class="block text-sm text-ink-3">${pl.count.toLocaleString('es-AR')} opiniones · ${esc(pl.label)}</span></span>
+            </a>`,
+          card: r => `<article class="${cardCls}">${starsHTML(r.rating)}<p class="mt-4 flex-1 text-lg leading-snug text-navy-900">“${esc(clip(r.text))}”</p>${author(r)}</article>`,
+          sample: () => `<article class="${cardCls}">${starsHTML(5)}<p class="mt-4 flex-1 text-lg leading-snug text-ink-3">[Opinión de un cliente: se carga automáticamente desde Google]</p>
+            <p class="mt-5 border-t border-steel-200 pt-4 text-sm text-ink-3">[Nombre del cliente] · Google</p></article>`
+        }
+      });
     })();
   </script>
   <script src="assets/b-layout.js"></script>
