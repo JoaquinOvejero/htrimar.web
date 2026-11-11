@@ -19,10 +19,35 @@
     <section class="pb-16 pt-14 sm:pt-20">
       <div class="mx-auto max-w-4xl px-4 text-center sm:px-6" data-stagger>
         <h1 class="reveal font-serif text-[2.5rem] font-semibold leading-[1.06] text-navy-900 sm:text-[3.2rem] lg:text-[3.4rem]">Estamos para asesorarlo</h1>
+        <!-- Gold rule with one centred diamond under the title, drawn like the one in Marcas (at the user's request) -->
+        <div class="reveal relative mx-auto mt-6 h-4 max-w-[44rem]" aria-hidden="true">
+          <span class="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gold-500/60"></span><!-- taste-skill-ignore: rule kept at the user's request -->
+          <span class="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 border border-gold-500 bg-ivory-50"></span><!-- taste-skill-ignore: diamond kept at the user's request -->
+        </div>
         <p class="reveal mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">Pida una cotización, consulte por un repuesto o avísenos si tiene un equipo parado.</p>
       </div>
-      <div class="reveal mx-auto mt-12 max-w-7xl px-4 sm:px-6 lg:px-8">
-        <img src="https://trimarchi.com.ar/wp-content/uploads/2026/07/trimarchi-nosotros.jpg" alt="El equipo de H. Trimarchi" width="3000" height="1221" fetchpriority="high" class="aspect-[4/3] w-full rounded-[2rem] object-cover sm:aspect-[21/9]">
+      <!-- Locations right under the title: map, address and directions for each branch -->
+      <div id="sedes" class="mx-auto mt-12 grid max-w-7xl scroll-mt-24 gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:px-8" data-stagger>
+        <article class="reveal flex flex-col overflow-hidden rounded-[2rem] bg-white shadow-[8px_14px_34px_-14px_rgba(13,18,53,0.28)]"><!-- taste-skill-ignore: card shadow (right and bottom) kept at the user's request -->
+          <iframe title="Mapa Casa matriz - Abraham J. Luppi 1535" src="https://www.google.com/maps?q=Abraham+J.+Luppi+1535,+C1437FRN+CABA,+Argentina&output=embed" class="h-72 w-full border-0 grayscale-[35%]" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="flex flex-1 flex-col items-center p-8 text-center">
+            <h2 class="font-serif text-3xl font-semibold text-navy-900">Casa matriz</h2>
+            <p class="tabular mt-2 text-lg font-semibold text-navy-900">Abraham J. Luppi 1535</p>
+            <p class="mt-1 text-ink-soft">C1437FRN · Villa Pompeya, CABA</p>
+            <p class="mt-1 text-sm text-ink-muted">Depósitos, fábrica y oficinas · [Horario a confirmar]</p>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Abraham+J.+Luppi+1535,+CABA,+Argentina" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 rounded-full bg-ivory-100 px-5 py-2.5 font-semibold text-navy-800 transition hover:bg-ivory-200">Cómo llegar <i data-lucide="navigation" class="h-4 w-4" stroke-width="1.75"></i></a>
+          </div>
+        </article>
+        <article class="reveal flex flex-col overflow-hidden rounded-[2rem] bg-white shadow-[8px_14px_34px_-14px_rgba(13,18,53,0.28)]"><!-- taste-skill-ignore: card shadow (right and bottom) kept at the user's request -->
+          <iframe title="Mapa Sucursal - Tte. Gral. Eustaquio Frías 182" src="https://www.google.com/maps?q=Eustaquio+Fr%C3%ADas+182,+C1414DVD+CABA,+Argentina&output=embed" class="h-72 w-full border-0 grayscale-[35%]" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="flex flex-1 flex-col items-center p-8 text-center">
+            <h2 class="font-serif text-3xl font-semibold text-navy-900">Sucursal</h2>
+            <p class="tabular mt-2 text-lg font-semibold text-navy-900">Tte. Gral. Eustaquio Frías 182</p>
+            <p class="mt-1 text-ink-soft">C1414DVD · Parque Centenario, CABA</p>
+            <p class="mt-1 text-sm text-ink-muted">[Horario a confirmar]</p>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Eustaquio+Fr%C3%ADas+182,+CABA,+Argentina" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 rounded-full bg-ivory-100 px-5 py-2.5 font-semibold text-navy-800 transition hover:bg-ivory-200">Cómo llegar <i data-lucide="navigation" class="h-4 w-4" stroke-width="1.75"></i></a>
+          </div>
+        </article>
       </div>
       <ul class="reveal mx-auto mt-10 grid max-w-5xl gap-3 px-4 sm:flex sm:flex-wrap sm:justify-center sm:px-6">
         <li><a href="mailto:info@trimarchi.com.ar" class="flex items-center justify-center gap-3 rounded-3xl bg-white px-6 py-3.5 text-navy-900 transition hover:bg-ivory-100 sm:inline-flex sm:rounded-full"><i data-lucide="mail" class="h-5 w-5 text-gold-600" stroke-width="1.5"></i><span class="font-semibold">info@trimarchi.com.ar</span></a></li>
@@ -94,39 +119,17 @@
       </div>
     </section>
 
-    <!-- Locations (A) -->
-    <section id="sedes" class="scroll-mt-24 py-16 sm:py-20">
+    <!-- Head office photos (the maps and addresses are at the top of the page) -->
+    <section class="py-16 sm:py-20">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="mx-auto max-w-3xl text-center">
-          <h2 class="reveal font-serif text-4xl font-semibold leading-tight text-navy-900 lg:text-[2.6rem]">Dos sedes en la Ciudad de Buenos Aires</h2>
-          <p class="reveal mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">En la casa matriz de Villa Pompeya reunimos depósitos, fábrica y oficinas.</p>
+          <h2 class="reveal font-serif text-4xl font-semibold leading-tight text-navy-900 lg:text-[2.6rem]">Nuestra casa matriz</h2>
+          <p class="reveal mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">En Villa Pompeya reunimos depósitos, fábrica y oficinas.</p>
         </div>
         <div class="mt-12 grid grid-cols-3 gap-3 sm:gap-4" data-stagger>
           <img class="reveal aspect-[4/3] w-full rounded-2xl object-cover sm:rounded-[1.5rem]" src="https://trimarchi.com.ar/wp-content/uploads/2025/08/la-partista-h-trimarchi-1-1.jpg" alt="Entrada de la casa matriz durante los 40 años de la empresa" width="783" height="578" loading="lazy" decoding="async">
           <img class="reveal aspect-[4/3] w-full rounded-2xl object-cover sm:rounded-[1.5rem]" src="https://trimarchi.com.ar/wp-content/uploads/2025/09/estanterias-luppi-1535-683x1024.jpg" alt="Depósito de la casa matriz en Luppi 1535" width="683" height="1024" loading="lazy" decoding="async">
           <img class="reveal aspect-[4/3] w-full rounded-2xl object-cover sm:rounded-[1.5rem]" src="https://trimarchi.com.ar/wp-content/uploads/2025/08/taller-luppi-1548-herreria-en-gral-e1754597388480-1024x708.jpg" alt="Taller de herrería de la empresa" width="1024" height="708" loading="lazy" decoding="async">
-        </div>
-        <div class="mt-12 grid gap-8 lg:grid-cols-2">
-          <article class="reveal flex flex-col overflow-hidden rounded-[2rem] bg-white">
-            <iframe title="Mapa Casa matriz - Abraham J. Luppi 1535" src="https://www.google.com/maps?q=Abraham+J.+Luppi+1535,+C1437FRN+CABA,+Argentina&output=embed" class="h-72 w-full border-0 grayscale-[35%]" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            <div class="flex flex-1 flex-col items-center p-8 text-center">
-              <h3 class="font-serif text-3xl font-semibold text-navy-900">Casa matriz</h3>
-              <p class="tabular mt-2 text-lg font-semibold text-navy-900">Abraham J. Luppi 1535</p>
-              <p class="mt-1 text-ink-soft">C1437FRN · Villa Pompeya, CABA</p>
-              <p class="mt-1 text-sm text-ink-muted">Depósitos, fábrica y oficinas · [Horario a confirmar]</p>
-              <a href="https://www.google.com/maps/dir/?api=1&destination=Abraham+J.+Luppi+1535,+CABA,+Argentina" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 rounded-full bg-ivory-100 px-5 py-2.5 font-semibold text-navy-800 transition hover:bg-ivory-200">Cómo llegar <i data-lucide="navigation" class="h-4 w-4" stroke-width="1.75"></i></a>
-            </div>
-          </article>
-          <article class="reveal flex flex-col overflow-hidden rounded-[2rem] bg-white" style="--d:80ms">
-            <iframe title="Mapa Sucursal - Tte. Gral. Eustaquio Frías 182" src="https://www.google.com/maps?q=Eustaquio+Fr%C3%ADas+182,+C1414DVD+CABA,+Argentina&output=embed" class="h-72 w-full border-0 grayscale-[35%]" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            <div class="flex flex-1 flex-col items-center p-8 text-center">
-              <h3 class="font-serif text-3xl font-semibold text-navy-900">Sucursal</h3>
-              <p class="tabular mt-2 text-lg font-semibold text-navy-900">Tte. Gral. Eustaquio Frías 182</p>
-              <p class="mt-1 text-ink-soft">C1414DVD · Parque Centenario, CABA</p>
-              <p class="mt-1 text-sm text-ink-muted">[Horario a confirmar]</p>
-              <a href="https://www.google.com/maps/dir/?api=1&destination=Eustaquio+Fr%C3%ADas+182,+CABA,+Argentina" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-2 rounded-full bg-ivory-100 px-5 py-2.5 font-semibold text-navy-800 transition hover:bg-ivory-200">Cómo llegar <i data-lucide="navigation" class="h-4 w-4" stroke-width="1.75"></i></a>
-            </div>
-          </article>
         </div>
       </div>
     </section>
